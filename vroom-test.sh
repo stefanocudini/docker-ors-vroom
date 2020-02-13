@@ -1,4 +1,4 @@
 #!/bin/bash
 #
 
-curl -X POST -H "Content-Type: application/json" -d vroom-problem.json http://localhost:8083
+curl -d @vroom-problem.json -X POST -H "Content-Type: application/json" http://localhost:8083

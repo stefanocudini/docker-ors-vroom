@@ -4,28 +4,33 @@ networks:
     driver: bridge
 services:
   ors:
-    #container_name: ors-smartbin
+    container_name: ors-smartbin
     #TODO build
     ports: ["8080:8080"]
     image: docker_ors-smartbin:latest
     build:
-      context: ./
+      context: ../openrouteservice/
       args:
-          APP_CONFIG: ./ors.config
-          OSM_FILE: ./data/povo.osm.gz
+      #    APP_CONFIG: ../docker-ors-vroom/ors.config
+      #    OSM_FILE: ../docker-ors-vroom/data/povo.osm.gz
           JAVA_OPTS: -Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms1g -Xmx2g
           CATALINA_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
     volumes:
+      - ./ors.config:/ors-core/openrouteservice/src/main/resources/app.config
+      - ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
       - ./graphs:/ors-core/data/graphs
       - ./elevation_cache:/ors-core/data/elevation_cache
       - ./logs/:/var/log/ors/
       - ./logs/:/usr/local/tomcat/logs
   vroom:
-    #container_name: vroom-smartbin
+    container_name: vroom-smartbin
     image: vroom-ors:latest
+    build:
+      context: ./
+      
     ports: ["8083:3000"]
     volumes:
-     - "./vroom.config.js:/vroom-express/src/config.js"
+     - ./vroom.config.js:/vroom-express/src/config.js
 
   #vroom-test:
   #  image: nginx

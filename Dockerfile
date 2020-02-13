@@ -24,7 +24,6 @@ RUN git clone https://github.com/VROOM-Project/vroom-express.git /vroom-express
 
 #RUN mkdir /vroom-express
 #ADD ./vroom-express /vroom-express
-
 #TODO volume
 
 ENV VROOM_EXPRESS_BRANCH master
@@ -41,4 +40,3 @@ RUN apt-get update && \
 
 EXPOSE 3000
 CMD ["npm", "start", "--prefix", "/vroom-express"]
-
