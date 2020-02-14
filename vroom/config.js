@@ -38,8 +38,8 @@ const routingServers = {
     port: '8080'
   },
   'car': {
-    host: '0.0.0.0',
-    port: '5000'
+    host: 'ors',
+    port: '8080'
   }
 };
 
