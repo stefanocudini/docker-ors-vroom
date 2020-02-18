@@ -13,22 +13,22 @@ pip install openrouteservice
 OpenRouteService python binding, clone or install via pip
 https://github.com/DigitalCommonsLab/openrouteservice-py
 
-## Testing
+## Testing in Jupyter
 
 ```bash
 docker-compose up -d
 docker logs -f smartbin-ors
 ```
 
-* *./examples/povo.ipynb* python notebook to test Optimization Routing by ors python binding
+* *./notebooks/povo.ipynb* python notebook to test Optimization Routing by ors python binding
 
 ```bash
 pip install --user jupyterlab
-cd examples
+cd notebooks
 jupyter lab
 ```
 
-### testing vroom
+### Testing vroom
 
 simple vrp problem to test vroom instance(on port 3000)
 

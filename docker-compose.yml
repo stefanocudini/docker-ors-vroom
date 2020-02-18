@@ -33,12 +33,16 @@ services:
     volumes:
      - ./vroom/config.js:/vroom-express/src/config.js
 
-  #vroom-test:
-  #  image: nginx
-  #  container_name: vroom_test
-  #  ports: [ "80:80" ]
-  #  volumes:
-  #    - "./preview/index.html:/usr/share/nginx/html/index.html"
+  test:
+    container_name: smartbin-test
+    image: smartbin-test:latest
+    build:
+      context: ./test/
+      args:
+        NOTEBOOK_ARGS: '--NotebookApp.token=""'
+    ports: ["8888:8888"]
+    #volumes:
+    #  - "./preview/index.html:/usr/share/nginx/html/index.html"
       
   #EXAMPLE OF PELIAS CONFIG
   # libpostal:
