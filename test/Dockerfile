@@ -18,7 +18,5 @@ USER $NB_UID
 RUN pip install openrouteservice
 RUN pip install folium
 
-COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/jupyter_notebook_config.py
-
 COPY povo.ipynb .
 COPY povo.geojson .

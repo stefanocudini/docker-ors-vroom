@@ -38,12 +38,9 @@ services:
     image: smartbin-test:latest
     build:
       context: ./test/
-      args:
-        NOTEBOOK_ARGS: '--NotebookApp.token=""'
     ports: ["8888:8888"]
-    #volumes:
-    #  - "./preview/index.html:/usr/share/nginx/html/index.html"
-      
+    volumes:
+      - "./test/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py"
   #EXAMPLE OF PELIAS CONFIG
   # libpostal:
   #   image: pelias/libpostal-service
