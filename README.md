@@ -4,24 +4,33 @@
 ## Setup
 
 ```bash
-git clone https://github.com/GIScience/openrouteservice.git ./ors/openrouteservice
+git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
+```
+```bash
+pip install openrouteservice
 ```
 
-* vroom/test.json example of vroom problem
-* vroom/test.sh send test.json to vroom
-
-
+OpenRouteService python binding, clone or install via pip
+https://github.com/DigitalCommonsLab/openrouteservice-py
 
 ## Testing
 
-requirements: ORS python binding
-https://github.com/giscience/openrouteservice-py
+```bash
+docker-compose up -d
+docker logs -f smartbin-ors
+```
 
-* example.ipynb python notebook to test Optimization Routing by ors python binding
+* *./examples/povo.ipynb* python notebook to test Optimization Routing by ors python binding
 
 ```bash
-pip install openrouteservice
 pip install --user jupyterlab
 cd examples
 jupyter lab
 ```
+
+### testing vroom
+
+simple vrp problem to test vroom instance(on port 3000)
+
+* vroom/test.json example of vroom problem
+* vroom/test.sh send test.json to vroom

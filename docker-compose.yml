@@ -5,7 +5,7 @@ networks:
 services:
   ors:
     container_name: smartbin-ors
-    #TODO build
+    restart: always
     ports: ["8080:8080"]
     image: smartbin-ors:latest
     build:
@@ -25,6 +25,7 @@ services:
       - ./logs/:/usr/local/tomcat/logs
   vroom:
     container_name: smartbin-vroom
+    restart: always    
     image: smartbin-vroom:latest
     build:
       context: ./vroom/

@@ -12,7 +12,7 @@ RUN	apt-get install -qq \
 		libboost-all-dev \
 		make \
 		pkg-config && \
-	git clone https://github.com/GIScience/vroom.git /src/vroom && \
+	git clone https://github.com/DigitalCommonsLab/vroom.git /src/vroom && \
 	mkdir -p /src/vroom/bin && \
 	cd /src/vroom/src && \
 	make && \
@@ -25,7 +25,7 @@ ENV VROOM_EXPRESS_BRANCH master
 RUN	apt-get install -qq \
 		npm \
 		nodejs && \
-	git clone https://github.com/VROOM-Project/vroom-express.git /vroom-express && \
+	git clone https://github.com/DigitalCommonsLab/vroom-express.git /vroom-express && \
 	cd /vroom-express && \
 	npm install
 
