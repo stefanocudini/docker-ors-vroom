@@ -20,3 +20,5 @@ RUN pip install folium
 
 COPY povo.ipynb .
 COPY povo.geojson .
+
+#TODO CMD ["echo","STARTED JUPYTER at http://localhost:8888/"]
