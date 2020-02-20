@@ -20,7 +20,7 @@ http://localhost:8081/
 
 ## Testing OpenRouteService/VROOM in Jupyter
 
-* *./notebooks/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
+* *./jupyter/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
 
 brownser in:
 http://localhost:8081/
