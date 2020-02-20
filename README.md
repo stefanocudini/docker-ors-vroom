@@ -9,22 +9,23 @@ https://openrouteservice.org/dev/#/api-docs/optimization/post
 
 ```bash
 git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
-```
-
-## Testing in Jupyter
-
-```bash
 docker-compose up -d
 docker logs -f smartbin-ors
 ```
 
-* *./notebooks/povo.ipynb* python notebook to test Optimization Routing by ors python binding
+## Testing OpenRouteService App
 
-```bash
-pip install --user jupyterlab
-cd notebooks
-jupyter lab
-```
+brownser in:
+http://localhost:8081/
+
+
+## Testing in Jupyter
+
+* *./notebooks/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
+
+brownser in:
+http://localhost:8081/
+
 
 ### Testing OpenRouteService
 

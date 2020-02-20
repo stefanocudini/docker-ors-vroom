@@ -1,7 +1,7 @@
 {
    "ors":{
      "info": {
-       "base_url": "http://localhost:8082/",
+       "base_url": "http://localhost:8080/",
        "support_mail": "support@openrouteservice.org",
        "author_tag": "openrouteservice",
        "content_licence": "LGPL 3.0"
@@ -9,7 +9,7 @@
       "services":{
          "matrix":{
             "enabled":true,
-            "maximum_locations":200,
+            "maximum_locations":1000,
             "maximum_visited_nodes":100000,
             "allow_resolve_locations":true,
             "attribution":"openrouteservice.org, OpenStreetMap contributors"
@@ -19,7 +19,7 @@
             "maximum_range_distance":[
                {
                   "profiles":"any",
-                  "value":50000
+                  "value":100000
                },
                {
                   "profiles":"driving-car, driving-hgv, cycling-regular, foot-walking",
@@ -29,17 +29,17 @@
             "maximum_range_time":[
                {
                   "profiles":"any",
-                  "value":18000
+                  "value":100000
                },
                {
                   "profiles":"driving-car, driving-hgv, cycling-regular, foot-walking",
-                  "value":36000
+                  "value":100000
                }
             ],
-            "maximum_intervals":10,
+            "maximum_intervals":1000,
             "maximum_locations":2,
             "allow_compute_area":true,
-            "attribution":"openrouteservice.org, OpenStreetMap contributors"
+            "attribution": "openrouteservice.org, OpenStreetMap contributors"
          },
          "routing":{
             "enabled":true,
