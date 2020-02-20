@@ -48,7 +48,19 @@ services:
     depends_on:
       - ors
       - vroom
-          
+
+  ors-app:
+    container_name: smartbin-ors-app
+    image: smartbin-ors-app:latest
+    build:
+      context: ./ors-app/
+    ports: ["8081:3035"]
+    volumes:
+      - ./ors-app/build:/ors-app/app/build
+      - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
+    depends_on:
+      - ors
+
   #EXAMPLE OF PELIAS CONFIG
   # libpostal:
   #   image: pelias/libpostal-service
