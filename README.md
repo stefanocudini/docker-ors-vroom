@@ -12,10 +12,16 @@ docker-compose up -d
 docker logs -f smartbin-ors
 ```
 
+## Testing OpenRouteService API
+
+brownser in:
+http://localhost:8080
+
+
 ## Testing OpenRouteService in Map
 
 brownser in:
-http://localhost:8081/
+http://localhost:8081
 
 
 ## Testing OpenRouteService/VROOM in Jupyter
@@ -23,7 +29,7 @@ http://localhost:8081/
 * *./jupyter/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
 
 brownser in:
-http://localhost:8081/
+http://localhost:8082
 
 
 ### Testing OpenRouteService
@@ -39,8 +45,8 @@ pip install openrouteservice
 
 simple VRP problem to test vroom instance(on port 3000)
 
-* vroom/test.json example of vroom problem
-* vroom/test.sh send test.json to vroom
+brownser in:
+http://localhost:8083
 
 tools for testinv vroom generating random problems
 ```bash
