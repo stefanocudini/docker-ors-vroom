@@ -4,7 +4,6 @@
 Use OpenRouteService Optimization API with VROOM
 https://openrouteservice.org/dev/#/api-docs/optimization/post
 
-
 ## Setup
 
 ```bash
@@ -13,13 +12,13 @@ docker-compose up -d
 docker logs -f smartbin-ors
 ```
 
-## Testing OpenRouteService App
+## Testing OpenRouteService in Map
 
 brownser in:
 http://localhost:8081/
 
 
-## Testing in Jupyter
+## Testing OpenRouteService/VROOM in Jupyter
 
 * *./notebooks/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
 

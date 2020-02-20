@@ -24,31 +24,6 @@ services:
       - ./logs/:/usr/local/tomcat/logs
     restart: always
 
-  vroom:
-    container_name: smartbin-vroom
-    image: smartbin-vroom:latest
-    build:
-      context: ./vroom/
-    ports: ["3000:3000"]
-    volumes:
-     - ./vroom/config.js:/vroom-express/src/config.js
-    restart: always
-    depends_on:
-      - ors
-
-  test:
-    container_name: smartbin-test
-    image: smartbin-test:latest
-    build:
-      context: ./test/
-    ports: ["8888:8888"]
-    volumes:
-      - "./test/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py"
-    restart: always
-    depends_on:
-      - ors
-      - vroom
-
   ors-app:
     container_name: smartbin-ors-app
     image: smartbin-ors-app:latest
@@ -60,6 +35,31 @@ services:
       - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
     depends_on:
       - ors
+
+  vroom:
+    container_name: smartbin-vroom
+    image: smartbin-vroom:latest
+    build:
+      context: ./vroom/
+    ports: ["8083:3000"]
+    volumes:
+     - ./vroom/config.js:/vroom-express/src/config.js
+    restart: always
+    depends_on:
+      - ors
+
+  jupyter:
+    container_name: smartbin-jupyter
+    image: smartbin-jupyter:latest
+    build:
+      context: ./jupyter/
+    ports: ["8082:8888"]
+    volumes:
+      - "./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py"
+    restart: always
+    depends_on:
+      - ors
+      - vroom
 
   #EXAMPLE OF PELIAS CONFIG
   # libpostal:
