@@ -9,15 +9,15 @@ services:
     image: smartbin-ors:latest
     build:
       context: ./ors/openrouteservice/
-      #dockerfile: ./ors/openrouteservice/Dockerfile
       args:
-          #APP_CONFIG: ../config.json
-          #OSM_FILE: ../../data/povo.osm.gz
+          APP_CONFIG: ./docker/conf/config.json
+          OSM_FILE: ./docker/data/heidelberg.osm.gz
           JAVA_OPTS: -Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms1g -Xmx2g
           CATALINA_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
     volumes:
-      - ./ors/config.json:/ors-core/openrouteservice/src/main/resources/app.config
-      - ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
+      - ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config
+      #- ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
+      - ./data/trentino-alto-adige.pbf:/ors-core/data/osm_file.pbf
       - ./graphs/:/ors-core/data/graphs
       - ./elevation_cache/:/ors-core/data/elevation_cache
       - ./logs/:/var/log/ors/
@@ -56,7 +56,7 @@ services:
     ports: ["8082:8888"]
     volumes:
       - "./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py"
-    restart: always
+    #restart: always
     depends_on:
       - ors
       - vroom

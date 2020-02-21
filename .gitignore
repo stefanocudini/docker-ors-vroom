@@ -2,7 +2,7 @@
 logs
 graphs
 elevation_cache
-data
+data/*
 ors/openrouteservice
 jupyter/.ipynb_checkpoints
 vroom/vroom-scripts
