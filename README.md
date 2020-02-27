@@ -20,10 +20,24 @@ brownser in:
 http://localhost:8080
 
 
-## Testing OpenRouteService in Map
+## Testing VROOM API
 
 brownser in:
 http://localhost:8081
+
+
+## Testing OpenRouteService in Map
+
+brownser in:
+http://localhost:8082
+
+
+## Testing VROOM in Map
+
+upload json file problems inside jupyter/povo_xxx.json
+
+brownser in:
+http://localhost:8083
 
 
 ## Testing OpenRouteService/VROOM in Jupyter
@@ -31,7 +45,7 @@ http://localhost:8081
 * *./jupyter/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
 
 brownser in:
-http://localhost:8082
+http://localhost:8084
 
 
 ### Testing OpenRouteService

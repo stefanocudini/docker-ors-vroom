@@ -14,9 +14,7 @@ RUN	git clone https://github.com/DigitalCommonsLab/vroom-frontend.git /vroom-app
 
 WORKDIR /vroom-app
 
-RUN	npm install && npm run build
-
-RUN mv bundle.js src/map.js
+RUN	npm install
 
 EXPOSE 80
 
