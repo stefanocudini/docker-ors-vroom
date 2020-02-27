@@ -3,9 +3,9 @@ FROM ubuntu:18.04
 RUN	apt-get update -qq
 
 RUN apt-get install -qq \
-		git-core \
-		npm \
-		nodejs
+	git-core \
+	npm \
+	nodejs
 
 RUN	git clone https://github.com/DigitalCommonsLab/openrouteservice-app.git /ors-app
 

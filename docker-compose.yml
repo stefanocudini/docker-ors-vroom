@@ -34,7 +34,7 @@ services:
     image: smartbin-vroom:latest
     build:
       context: ./vroom/
-    ports: ["8083:3000"]
+    ports: ["8081:3000"]
     volumes:
      - ./vroom/config.js:/vroom-express/src/config.js
     restart: always
@@ -46,19 +46,30 @@ services:
     image: smartbin-ors-app:latest
     build:
       context: ./ors-app/
-    ports: ["8081:3035"]
+    ports: ["8082:3035"]
     volumes:
       - ./ors-app/build:/ors-app/app/build
       - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
     depends_on:
       - ors
 
+  vroom-app:
+    container_name: smartbin-vroom-app
+    image: smartbin-vroom-app
+    build:
+      context: ./vroom-app/
+    ports: ["8083:9966"]
+    volumes:
+      - ./vroom-app/config.js:/vroom-app/src/config/api.js
+    #depends_on:
+    #  - vroom
+
   jupyter:
     container_name: smartbin-jupyter
     image: smartbin-jupyter:latest
     build:
       context: ./jupyter/
-    ports: ["8082:8888"]
+    ports: ["8084:8888"]
     volumes:
       - "./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py"
     #restart: always

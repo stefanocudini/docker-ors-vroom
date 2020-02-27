@@ -1,6 +1,7 @@
 {
   "vehicles": [
     {
+      "profile": "driving-car",
       "start": [
         11.16024, 
         46.05639
