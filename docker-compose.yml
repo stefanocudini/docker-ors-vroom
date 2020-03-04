@@ -34,7 +34,7 @@ services:
     image: smartbin-vroom:latest
     build:
       context: ./vroom/
-    ports: ["8081:3000"]
+    ports: ["8081:3035"]
     volumes:
      - ./vroom/config.js:/vroom-express/src/config.js
     restart: always

@@ -18,11 +18,6 @@ RUN	npm install -g bower && \
 	cd bower_components/angularjs-slider && \
 	npm install
 
-COPY ./Gruntfile.js /ors-app/
-
-#RUN cd /ors-app && \
-#pwd && ls -l
-
 # RUN cd /ors-app && \
 # 	grunt less:development && \
 # 	grunt prettier && \
@@ -32,6 +27,6 @@ COPY ./Gruntfile.js /ors-app/
 # 	grunt ngtemplates && \
 # 	grunt ngconstant:local
 
-EXPOSE 3005
+EXPOSE 3035
 
 CMD ["grunt", "ors"]

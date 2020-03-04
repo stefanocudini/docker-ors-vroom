@@ -259,11 +259,10 @@ module.exports = function(grunt) {
             },
             // Environment targets
             local: {
-                options: {
-                    dest: "app/js/config.js"
-                },
                 constants: {
                     ENV: {
+                    	center: [46.2101, 11.093144],
+                    	zoom: 16,
                         name: "local",
                         geocode:
                             //"http://localhost:8082/ors/geocode",
@@ -283,14 +282,16 @@ module.exports = function(grunt) {
                         landmarks: "https://landmarks-api.openrouteservice.org/",
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
-                }
-            },
-            ors: {
+                },
                 options: {
                     dest: "app/js/config.js"
-                },
+                }                
+            },
+            ors: {
                 constants: {
                     ENV: {
+                    	center: [46.2101, 11.093144],
+                    	zoom: 16,
                         name: "production",
                         geocode:
                             //"http://localhost:8082/ors/geocode",
@@ -310,7 +311,10 @@ module.exports = function(grunt) {
                         landmarks: "https://landmarks-api.openrouteservice.org/",
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
-                }
+                },
+                options: {
+                    dest: "app/js/config.js"
+                }                
             }
         },
         stripDebug: {
