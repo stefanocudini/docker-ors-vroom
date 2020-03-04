@@ -17,7 +17,7 @@ https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config)
 ```bash
 git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
 cp ./ors/config.json ./ors/openrouteservice/docker/conf/config.json
-cp ../data/povo.osm.gz ./ors/openrouteservice/data/osm_file.pbf
+cp ./data/povo.osm.gz ./ors/openrouteservice/docker/data/povo.osm.gz
 docker-compose up -d
 docker logs -f smartbin-ors
 ```
