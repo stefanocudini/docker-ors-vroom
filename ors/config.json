@@ -22,7 +22,7 @@
                   "value":100000
                },
                {
-                  "profiles":"driving-car, driving-hgv, cycling-regular, foot-walking",
+                  "profiles":"driving-car, driving-hgv",
                   "value":100000
                }
             ],
@@ -32,14 +32,14 @@
                   "value":100000
                },
                {
-                  "profiles":"driving-car, driving-hgv, cycling-regular, foot-walking",
+                  "profiles":"driving-car, driving-hgv",
                   "value":100000
                }
             ],
             "maximum_intervals":1000,
             "maximum_locations":2,
             "allow_compute_area":true,
-            "attribution": "openrouteservice.org, OpenStreetMap contributors"
+            "attribution": ""
          },
          "routing":{
             "enabled":true,
@@ -47,13 +47,12 @@
             "sources":[
                "data/osm_file.pbf"
             ],
-            "init_threads":1,
-            "attribution":"openrouteservice.org, OpenStreetMap contributors",
+            "init_threads": 1,
+            "attribution":"",
             "distance_approximation":true,
             "profiles":{
                "active":[
                    "vehicles-car",
-                   "pedestrian-walk",
                    "vehicles-hgv"
                ],
                "default_params": {
@@ -65,7 +64,7 @@
                    "instructions": true,
                    "maximum_distance": 100000,
                    "maximum_segment_distance_with_dynamic_weights": 100000,
-                   "maximum_waypoints": 50
+                   "maximum_waypoints": 100
                },
                "profile-vehicles-car":{
                   "profiles":"driving-car",
@@ -112,60 +111,6 @@
 
                         },
                         "Tollways":{
-
-                        }
-                     }
-                  }
-               },
-               "profile-pedestrian-walk":{
-                  "profiles":"foot-walking",
-                  "parameters":{
-                     "__encoder_options":"consider_elevation=true|turn_costs=true|block_fords=false",
-                     "encoder_options":"consider_elevation=true",
-                     "elevation": true,
-                     "preparation":{
-                        "min_network_size":200,
-                        "min_one_way_network_size":200,
-                        "methods":{
-                           "ch":{
-                              "enabled":true,
-                              "threads":8,
-                              "weightings":"fastest"
-                           },
-                           "lm":{
-                              "enabled":true,
-                              "threads":8,
-                              "weightings":"fastest,shortest",
-                              "landmarks":24
-                           }
-                        }
-                     },
-                     "execution":{
-                        "methods":{
-                           "astar":{
-                              "approximation":"BeelineSimplification",
-                              "epsilon":1
-                           },
-                           "ch":{
-                              "disabling_allowed":true
-                           },
-                           "lm":{
-                              "disabling_allowed":true,
-                              "active_landmarks":6
-                           }
-                        }
-                     },
-                     "ext_storages":{
-                        "WayCategory":{
-
-                        },
-                        "WaySurfaceType":{
-
-                        },
-                        "HillIndex":{
-
-                        },
-                        "TrailDifficulty":{
 
                         }
                      }
@@ -229,7 +174,7 @@
       },
       "logging": {
           "enabled": true,
-          "level_file": "PRODUCTION_LOGGING.json",
+          "level_file": "DEBUG_LOGGING.json",
           "location": "/var/log/ors",
           "stdout": true
       }

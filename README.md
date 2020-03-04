@@ -4,6 +4,14 @@
 Use OpenRouteService Optimization API with VROOM
 https://openrouteservice.org/dev/#/api-docs/optimization/post
 
+
+## Configuration
+
+./ors/config.json
+
+https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config) 
+
+
 ## Setup
 
 ```bash
