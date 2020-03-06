@@ -26,7 +26,8 @@ services:
       #default config - ./ors/app.config.sample:/ors-core/openrouteservice/target/classes/app.config
       #default data - ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
       - ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config
-      - ./data/trentino-alto-adige.pbf:/ors-core/data/osm_file.pbf
+      #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
+      - ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
     restart: always
 
   vroom:
@@ -34,9 +35,9 @@ services:
     image: smartbin-vroom:latest
     build:
       context: ./vroom/
-    ports: ["8081:3035"]
+    ports: ["8081:3000"]
     volumes:
-     - ./vroom/config.js:/vroom-express/src/config.js
+      - ./vroom/config.js:/vroom-express/src/config.js
     restart: always
     depends_on:
       - ors
@@ -71,7 +72,9 @@ services:
       context: ./jupyter/
     ports: ["8084:8888"]
     volumes:
-      - "./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py"
+      - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
+      - ./jupyter/test.ipynb:/home/jovyan/test.ipynb
+      - ./jupyter/data:/home/jovyan/data
     #restart: always
     depends_on:
       - ors

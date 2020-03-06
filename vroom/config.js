@@ -17,7 +17,7 @@ const cliArgs = minimist(process.argv.slice(2), {
   },
   boolean: ['geometry', 'override'],
   default: {
-    geometry: false, // retrieve geometry (-g)
+    geometry: true, // retrieve geometry (-g)
     limit: MAX_REQUEST_SIZE, // max request size
     logdir: LOG_DIR, // put logs in there
     maxjobs: MAX_JOBS, // max number of jobs
@@ -37,6 +37,14 @@ const routingServers = {
     host: 'ors',
     port: '8080'
   },
+  'driving-hgv': {
+    host: 'ors',
+    port: '8080'
+  },
+  'hgv': {
+    host: 'ors',
+    port: '8080'
+  },   
   'car': {
     host: 'ors',
     port: '8080'
