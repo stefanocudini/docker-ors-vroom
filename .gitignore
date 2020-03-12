@@ -1,6 +1,6 @@
 .env
 logs
-graphs
+graphs*
 elevation_cache
 data/*
 ors/openrouteservice
