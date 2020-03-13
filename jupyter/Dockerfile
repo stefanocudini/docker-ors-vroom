@@ -18,6 +18,8 @@ USER $NB_UID
 RUN pip install openrouteservice
 RUN pip install folium
 
+#TODO add ping for tests
+
 #COPY povo.ipynb .
 #COPY povo.geojson .
 
