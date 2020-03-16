@@ -9,16 +9,30 @@ https://openrouteservice.org/dev/#/api-docs/optimization/post
 
 ./ors/config.json
 
+### config documentation
+
 https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config) 
 
 
-## Setup
 
+# Setup
+
+Download OpenRouteService
 ```bash
 git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
 cp ./ors/config.json ./ors/openrouteservice/docker/conf/config.json
+```
+
+add custom Openstreetmap test data in OpenRouteService data dir
+
+```bash
 cp ./data/povo.osm.gz ./ors/openrouteservice/docker/data/povo.osm.gz
 docker-compose up -d
+```
+first time the images building require some minutes...
+
+monitoring of routing engines
+```bash
 docker logs -f smartbin-ors
 ```
 
@@ -42,37 +56,47 @@ http://localhost:8082
 
 ## Testing VROOM in Map
 
-upload json file problems inside jupyter/povo_xxx.json
+upload json file problems inside jupyter/data/xxx.json
 
 brownser in:
 http://localhost:8083
 
 
-## Testing OpenRouteService/VROOM in Jupyter
+## Testing Algorithms in Jupyter notebook
 
-* *./jupyter/povo.ipynb* python notebook to test Routing Algorithms by ORS python binding
+* *./jupyter/test.ipynb* python notebook to test Routing Algorithms by OpenRouteService python binding
 
 brownser in:
 http://localhost:8084
 
 
-### Testing OpenRouteService
+### Testing OpenRouteService via python
 
 OpenRouteService python binding, clone or install via pip
 https://github.com/DigitalCommonsLab/openrouteservice-py
 
 ```bash
 pip install openrouteservice
+
+import openrouteservice as ors
+
+client = ors.Client(base_url='http://ors:8080/ors', key='')
+
+#TSP only openrouteservice routing engine
+route = client.directions(...)
+
+#VRP vroom vrp engine
+routes = client.optimization(...)
+
 ```
 
-### Testing VROOM
+### Create random testing data for VROOM
 
 simple VRP problem to test vroom instance(on port 3000)
 
 brownser in:
 http://localhost:8083
 
-tools for testinv vroom generating random problems
 ```bash
 git clone https://github.com/VROOM-Project/vroom-scripts.git
 
@@ -81,26 +105,3 @@ cd vroom-scripts/src/
 ./random_problem.py -j2 --top 46.07 --bottom 46.02 --left 11.14 --right 11.18
 
 ```
-
-usage: random_problem.py [-h] [-j JOBS] [-o OUTPUT] [--top TOP]
-                         [--bottom BOTTOM] [--left LEFT] [--right RIGHT]
-                         [-s SEED] [--uniform] [--geojson] [--csv]
-
-Generate random problem
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -j JOBS, --jobs JOBS  number of jobs to generate
-  -o OUTPUT, --output OUTPUT
-                        output file name
-  --top TOP             bounding box max latitude
-  --bottom BOTTOM       bounding box min latitude
-  --left LEFT           bounding box min longitude
-  --right RIGHT         bounding box max longitude
-  -s SEED, --seed SEED  number used for seeding the random generation
-  --uniform             use an uniform distribution (default is normal)
-  --geojson             also write a geojson file with all generated points
-  --csv                 also write a csv file with coordinates for all
-                        generated points
-
-
