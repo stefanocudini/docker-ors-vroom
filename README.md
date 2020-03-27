@@ -26,12 +26,12 @@ cp ./ors/config.json ./ors/openrouteservice/docker/conf/config.json
 add custom Openstreetmap test data in OpenRouteService data dir
 
 ```bash
-cp ./data/povo.osm.gz ./ors/openrouteservice/docker/data/povo.osm.gz
+cp ./data/mezzocorona.osm.pbf ./ors/openrouteservice/docker/data/mezzocorona.osm.pbf
 docker-compose up -d
 ```
 first time the images building require some minutes...
 
-monitoring of routing engines
+monitoring of routing engines(optional)
 ```bash
 docker logs -f smartbin-ors
 ```
