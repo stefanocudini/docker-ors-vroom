@@ -105,3 +105,8 @@ cd vroom-scripts/src/
 ./random_problem.py -j2 --top 46.07 --bottom 46.02 --left 11.14 --right 11.18
 
 ```
+
+
+### TODO
+
+include custom parameters in file ./ors/HeavyVehicleFlagEncoder.java
