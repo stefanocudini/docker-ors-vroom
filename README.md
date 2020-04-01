@@ -1,6 +1,13 @@
 
 # Docker VRP(Vehicle Routing Problem) OpenRouteService with VROOM
 
+TSP Travel Salesman Problem
+![TSP Algorithm](/data/tsp.png)
+
+VRP Vehicle Routing Problem
+![VRP Algorithm](/data/vrp.png)
+
+
 Use OpenRouteService Optimization API with VROOM
 https://openrouteservice.org/dev/#/api-docs/optimization/post
 
