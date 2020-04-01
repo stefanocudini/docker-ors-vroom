@@ -1,4 +1,5 @@
 .env
+.docker-compose.yml.swp
 logs
 graphs*
 elevation_cache
@@ -10,4 +11,3 @@ vroom/vroom-scripts
 vroom-app/vroom-frontend
 node_modules
 package-lock.json
-
