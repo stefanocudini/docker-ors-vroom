@@ -6,6 +6,7 @@ elevation_cache
 data/*
 ors/openrouteservice
 ors/openrouteservice-dev
+ors/openrouteservice-custom
 jupyter/.ipynb_checkpoints
 vroom/vroom-scripts
 vroom-app/vroom-frontend
