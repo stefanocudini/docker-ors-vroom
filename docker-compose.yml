@@ -94,3 +94,6 @@ services:
     depends_on:
       - ors
       - vroom
+    #network_mode: host
+    extra_hosts:
+      - "testhost:127.0.0.1"
