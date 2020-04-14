@@ -9,6 +9,7 @@ ors/openrouteservice-dev
 ors/openrouteservice-custom
 jupyter/.ipynb_checkpoints
 vroom/vroom-scripts
+vroom/vroom-src
 vroom-app/vroom-frontend
 node_modules
 package-lock.json
