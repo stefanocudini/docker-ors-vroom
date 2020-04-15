@@ -94,6 +94,4 @@ services:
     depends_on:
       - ors
       - vroom
-    #network_mode: host
-    extra_hosts:  #allow to reach localhost from the container
-      - "hostlocal:127.0.0.1"
+    

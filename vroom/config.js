@@ -32,22 +32,28 @@ const cliArgs = minimist(process.argv.slice(2), {
 
 // For each routing profile add a host and a port for use with osrm
 // and ors.
+var orshost = 'ors';
+var orsport = '8080';
+//testing in localhost
+var orshost = '192.168.1.7';
+var orsport = '9000';
+
 const routingServers = {
   'driving-car': {
-    host: 'ors',
-    port: '8080'
+    host: orshost,
+    port: orsport
   },
   'driving-hgv': {
-    host: 'ors',
-    port: '8080'
+    host: orshost,
+    port: orsport
   },
   'hgv': {
-    host: 'ors',
-    port: '8080'
+    host: orshost,
+    port: orsport
   },   
   'car': {
-    host: 'ors',
-    port: '8080'
+    host: orshost,
+    port: orsport
   }
 };
 
