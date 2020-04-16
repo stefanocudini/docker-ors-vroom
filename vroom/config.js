@@ -38,6 +38,9 @@ var orsport = '8080';
 //var orshost = '192.168.1.7';
 //var orsport = '9000';
 
+orshost = process.env.ORS_HOST || orshost;
+orsport = process.env.ORS_PORT || orsport;
+
 const routingServers = {
   'driving-car': {
     host: orshost,

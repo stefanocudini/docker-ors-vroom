@@ -1,0 +1,37 @@
+{
+    "coordinates": [
+        [
+            11.089797,
+            46.21803
+        ],
+        [
+            11.123657,
+            46.214229
+        ]
+    ],
+    "attributes": [
+        "detourfactor",
+        "percentage"
+    ],
+    "instructions": false,
+    "elevation": false,
+    "extra_info": [
+        "steepness",
+        "waytype",
+        "surface"
+    ],
+    "geometry": true,
+    "units": "m",
+    "preference": "fastest",
+    "options": {
+        "profile_params": {
+            "restrictions": {
+                "height": "4",
+                "length": "4",
+                "weight": "4",
+                "width": "4"
+            }
+        },
+        "vehicle_type": "hgv"
+    }
+}

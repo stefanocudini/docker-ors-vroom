@@ -1,26 +1,43 @@
+
 var http = require('http');
 
-http.createServer(onRequest).listen(8080);
+var PORT=9090;
 
-function onRequest(client_req, client_res) {
-  console.log('serve: ' + client_req.url);
+function onRequest(req, res) {
 
-  var options = {
-    hostname: 'localhost',
-    port: 9090,
-    path: client_req.url,
-    method: client_req.method,
-    headers: client_req.headers
-  };
+	console.log('\nclient request: ' + req.url);
+	console.log('headers: ', req.headers);
+	//console.log('user-agent: ', req.headers['user-agent']);
 
-  var proxy = http.request(options, function (res) {
-    client_res.writeHead(res.statusCode, res.headers)
-    res.pipe(client_res, {
-      end: true
-    });
-  });
+	var options = {
+		hostname: 'localhost',
+		port: 8080,
+		path: req.url,
+		method: req.method,
+		headers: req.headers
+	};
 
-  client_req.pipe(proxy, {
-    end: true
-  });
+	req.on('data', function(chunk) {
+		var b = JSON.parse(chunk);
+		console.log('body:', JSON.stringify(b))
+	});
+
+	var proxy = http.request(options, function(pres) {
+
+		res.writeHead(pres.statusCode, pres.headers);
+
+		pres.pipe(res, {
+			end: true
+		});
+	});
+
+	req.pipe(proxy, {
+		end: true
+	});
 }
+
+http
+.createServer(onRequest)
+.listen(PORT);
+
+console.log('proxy listen...',PORT);

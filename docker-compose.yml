@@ -39,6 +39,11 @@ services:
     build:
       context: ./vroom/
     ports: ["8081:8081"]
+    environment:
+      - ORS_HOST="ors"
+      - ORS_PORT="8080"
+      #- ORS_HOST=192.168.1.7
+      #- ORS_PORT=9090
     volumes:
       - ./vroom/config.js:/vroom-express/src/config.js
       - ./vroom/index.js:/vroom-express/src/index.js

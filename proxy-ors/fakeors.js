@@ -27,8 +27,8 @@ http.createServer(function(req, res) {
 	    });
 	}
 
-	else if((new RegExp('matrix')).test(req.url)) {
-	    fs.readFile('outmatrix.json', function(err, content) {
+	else if((new RegExp('directions')).test(req.url)) {
+	    fs.readFile('outdirections.json', function(err, content) {
 	        res.write(content);
 	        res.end();
 	    });
