@@ -35,8 +35,8 @@ const cliArgs = minimist(process.argv.slice(2), {
 var orshost = 'ors';
 var orsport = '8080';
 //testing in localhost
-var orshost = '192.168.1.7';
-var orsport = '9000';
+//var orshost = '192.168.1.7';
+//var orsport = '9000';
 
 const routingServers = {
   'driving-car': {
