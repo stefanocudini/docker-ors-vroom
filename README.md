@@ -43,6 +43,11 @@ monitoring of routing engines(optional)
 docker logs -f smartbin-ors
 ```
 
+monitoring data packets from VROOM to ORS
+```bash
+docker-compose logs -f ors-proxy
+```
+
 ## Testing OpenRouteService API
 
 brownser in:

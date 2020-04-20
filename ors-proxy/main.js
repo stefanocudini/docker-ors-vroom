@@ -1,7 +1,25 @@
 
 var http = require('http');
 
+var config = {
+	"preference": "fastest",//"shortest",
+    "options": {
+        "vehicle_type": "hgv",
+        "profile_params": {
+            "restrictions": {
+                "height": "5",
+                "length": "5",
+                "weight": "5",
+                "width": "5"
+            }
+        }
+    }
+};
+//TODO config = require('./config');
+
 var PORT = 9090;
+
+console.log('config override ORS',config);
 
 // For each routing profile add a host and a port for use with osrm
 // and ors.
@@ -10,6 +28,7 @@ var orsport = '8080';
 orshost = process.env.ORS_HOST || orshost;
 orsport = process.env.ORS_PORT || orsport;
 
+console.log('ORS-Proxy start to', orshost, orsport)
 
 function onRequest(req, res) {
 
@@ -18,7 +37,7 @@ function onRequest(req, res) {
 
 	var opts = {
 		hostname: orshost,
-		port: orsport,
+		port: parseInt(orsport),
 		path: req.url,
 		method: req.method,
 		headers: req.headers
@@ -34,19 +53,9 @@ function onRequest(req, res) {
 	
 		if((new RegExp('directions')).test(req.url)) {
 
-			body.preference = "shortest";
-
-			body.options = {
-				"vehicle_type": "hgv",
-		        "profile_params": {
-		            "restrictions": {
-		                "weight": "4",	//in tons            	
-		                "height": "4",	//in meters
-		                "length": "4",	//in meters
-		                "width": "4"	//in meters
-		            }
-		        }
-		    };
+			//TODO use underscore to extend
+			body.preference = config.preference;
+			body.options = config.options;
 		}
 
 		var body_edit = JSON.stringify(body);
