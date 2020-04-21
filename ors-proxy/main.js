@@ -19,7 +19,7 @@ var config = {
 
 var PORT = 9090;
 
-console.log('config override ORS',config);
+console.log('CONFIG:', JSON.stringify(config));
 
 // For each routing profile add a host and a port for use with osrm
 // and ors.
@@ -28,12 +28,11 @@ var orsport = '8080';
 orshost = process.env.ORS_HOST || orshost;
 orsport = process.env.ORS_PORT || orsport;
 
-console.log('ORS-Proxy start to', orshost, orsport)
+console.log('ORS-PROXY LISTEN', orshost, orsport)
 
 function onRequest(req, res) {
 
-	console.log('\nclient request: ' + req.url);
-	console.log('headers: ', req.headers);
+	console.log('\n------\nREQUEST: ', req.url, JSON.stringify(req.headers));
 
 	var opts = {
 		hostname: orshost,
@@ -60,7 +59,7 @@ function onRequest(req, res) {
 
 		var body_edit = JSON.stringify(body);
 
-		console.log('body:', body);
+		console.log(body);
 
 		opts.headers['content-length'] = Buffer.byteLength(body_edit);
 
@@ -70,13 +69,13 @@ function onRequest(req, res) {
 
 			res.writeHead(resp.statusCode, resp.headers);
 
+			resp.on('data', function(d) {
+				console.log('\n------\nORS RESPONSE:\n', JSON.parse(d))
+			});
+
 			resp.pipe(res, {
 				end: true
 			});
-
-			/*DEBUG resp.on('data', function(d) {
-				console.log('RESPONSE body',JSON.parse(d))
-			});*/
 		});
 
 		proxy.write(body_edit);
