@@ -1,25 +1,11 @@
 
 var http = require('http');
 
-var config = {
-	"preference": "fastest",//"shortest",
-    "options": {
-        "vehicle_type": "hgv",
-        "profile_params": {
-            "restrictions": {
-                "height": "5",
-                "length": "5",
-                "weight": "5",
-                "width": "5"
-            }
-        }
-    }
-};
-//TODO config = require('./config');
+var conf = require('./config');
 
 var PORT = 9090;
 
-console.log('CONFIG:', JSON.stringify(config));
+console.log('CONFIG:', JSON.stringify(conf));
 
 // For each routing profile add a host and a port for use with osrm
 // and ors.
@@ -53,8 +39,8 @@ function onRequest(req, res) {
 		if((new RegExp('directions')).test(req.url)) {
 
 			//TODO use underscore to extend
-			body.preference = config.preference;
-			body.options = config.options;
+			body.preference = conf.preference;
+			body.options = conf.options;
 		}
 
 		var body_edit = JSON.stringify(body);

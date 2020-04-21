@@ -42,8 +42,8 @@ services:
     environment:
       - ORS_HOST=ors
       - ORS_PORT=8080
-    #TODO volumes:
-    #  - ./config.js:/ors-proxy/config.js
+    volumes:
+      - ./ors-proxy/config.js:/ors-proxy/config.js:ro
     restart: always
     depends_on:
       - ors
