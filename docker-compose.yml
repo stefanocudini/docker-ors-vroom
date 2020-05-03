@@ -21,16 +21,21 @@ services:
       - JAVA_OPTS="-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms1g -Xmx2g"
       - CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost"
     volumes:
+      - ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config
       - ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
       - ./elevation_cache/:/ors-core/data/elevation_cache/
+      - ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf
+      #
+      ##povo
+      #- ./graphs.povo/:/ors-core/data/graphs
+      #- ./elevation_cache_lidar/:/ors-core/data/elevation_cache/
+      #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
+
       - ./logs/:/var/log/ors/
       - ./logs/:/usr/local/tomcat/logs/
       #default config - ./ors/app.config.sample:/ors-core/openrouteservice/target/classes/app.config
       #default data - ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
-      - ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config
       #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
-      #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
-      - ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf
     restart: always
 
   ors-proxy:
@@ -44,7 +49,7 @@ services:
       - ORS_PORT=8080
     volumes:
       - ./ors-proxy/config.js:/ors-proxy/config.js:ro
-    restart: always
+    #restart: always
     depends_on:
       - ors
 
@@ -56,11 +61,11 @@ services:
     ports: ["8081:8081"]
     environment:
       #ORS DIRECT
-      #- ORS_HOST=ors
-      #- ORS_PORT=8080
+      - ORS_HOST=ors
+      - ORS_PORT=8080
       #ORS-PROXY
-      - ORS_HOST=ors-proxy
-      - ORS_PORT=9090
+      #- ORS_HOST=ors-proxy
+      #- ORS_PORT=9090
       #DEBUG
       #- ORS_HOST=192.168.1.7
       #- ORS_PORT=9090
