@@ -59,6 +59,8 @@ docker-compose logs -f ors-proxy
 brownser in:
 http://localhost:8080
 
+vehicles actives: "vehicles-hgv","bike",
+
 
 ## Testing VROOM API
 
