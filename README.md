@@ -24,6 +24,12 @@ https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config)
 
 # Setup
 
+Download this reporitory
+```bash
+git clone https://github.com/DigitalCommonsLab/docker-ors-vroom.git
+cd docker-ors-vroom
+```
+
 Download OpenRouteService
 ```bash
 git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
