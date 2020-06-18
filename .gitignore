@@ -11,6 +11,7 @@ jupyter/.ipynb_checkpoints
 vroom/vroom-scripts
 vroom/vroom-src
 vroom/vroom-express
+vroom/conf/access.log
 vroom-app/vroom-frontend
 node_modules
 package-lock.json

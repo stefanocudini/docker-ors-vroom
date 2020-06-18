@@ -44,7 +44,7 @@ app.use((err, req, res, next) => {
     'body' in err
   ) {
     const message =
-      'Invalid JSON object in request, please add jobs and vehicles to the object body';
+      'Invalid JSON object in request, please add vehicles and jobs or shipments to the object body';
     console.log(now() + ': ' + JSON.stringify(message));
     res.status(HTTP_ERROR_CODE);
     res.send({
@@ -60,18 +60,6 @@ const now = function() {
   return date.toUTCString();
 };
 
-const logToFile = function(input) {
-  const timestamp = Math.floor(Date.now() / 1000); //eslint-disable-line
-  const fileName = args.logdir + '/' + timestamp + '_' + uuid.v1() + '.json';
-  fs.writeFileSync(fileName, input, (err, data) => {
-    if (err) {
-      console.log(now() + err);
-    }
-  });
-
-  return fileName;
-};
-
 const fileExists = function(filePath) {
   try {
     return fs.statSync(filePath).isFile();
@@ -81,12 +69,15 @@ const fileExists = function(filePath) {
 };
 
 // Callback for size and some input validity checks.
-const sizeCheckCallback = function(maxJobNumber, maxVehicleNumber) {
+const sizeCheckCallback = function(maxLocationNumber, maxVehicleNumber) {
   return function(req, res, next) {
-    const correctInput = 'jobs' in req.body && 'vehicles' in req.body;
+    const hasJobs = 'jobs' in req.body;
+    const hasShipments = 'shipments' in req.body;
+
+    const correctInput = (hasJobs || hasShipments) && 'vehicles' in req.body;
     if (!correctInput) {
       const message =
-        'Invalid JSON object in request, please add jobs and vehicles to the object body';
+        'Invalid JSON object in request, please add vehicles and jobs or shipments to the object body';
       console.error(now() + ': ' + JSON.stringify(message));
       res.status(HTTP_ERROR_CODE);
       res.send({
@@ -96,13 +87,20 @@ const sizeCheckCallback = function(maxJobNumber, maxVehicleNumber) {
       return;
     }
 
-    if (req.body.jobs.length > maxJobNumber) {
-      const jobs = req.body.jobs.length;
+    let nbLocations = 0;
+    if (hasJobs) {
+      nbLocations += req.body.jobs.length;
+    }
+    if (hasShipments) {
+      nbLocations += 2 * req.body.shipments.length;
+    }
+
+    if (nbLocations > maxLocationNumber) {
       const message = [
-        'Too many jobs (',
-        jobs,
+        'Too many locations (',
+        nbLocations,
         ') in query, maximum is set to',
-        maxJobNumber
+        maxLocationNumber
       ].join(' ');
       console.error(now() + ': ' + JSON.stringify(message));
       res.status(HTTP_TOOLARGE_CODE);
@@ -138,10 +136,10 @@ const spawn = require('child_process').spawn;
 const vroomCommand = args.path + 'vroom';
 const options = [];
 options.push('-r', args.router);
-if (args.router != 'libosrm') {
+if (args.router !== 'libosrm') {
   const routingServers = config.routingServers;
-  for (const profileName in routingServers) {
-    const profile = routingServers[profileName];
+  for (const profileName in routingServers[args.router]) {
+    const profile = routingServers[args.router][profileName];
     if ('host' in profile && 'port' in profile) {
       options.push('-a', profileName + ':' + profile.host);
       options.push('-p', profileName + ':' + profile.port);
@@ -170,7 +168,43 @@ const execCallback = function(req, res) {
     reqOptions.push('-g');
   }
 
-  const fileName = logToFile(JSON.stringify(req.body));
+  let nbThreads = args.threads;
+  if (
+    args.override &&
+    'options' in req.body &&
+    't' in req.body.options &&
+    typeof req.body.options.t == 'number'
+  ) {
+    nbThreads = req.body.options.t;
+  }
+  reqOptions.push('-t ' + nbThreads);
+
+  let explorationLevel = args.explore;
+  if (
+    args.override &&
+    'options' in req.body &&
+    'x' in req.body.options &&
+    typeof req.body.options.x == 'number'
+  ) {
+    explorationLevel = req.body.options.x;
+  }
+  reqOptions.push('-x ' + explorationLevel);
+
+  const timestamp = Math.floor(Date.now() / 1000); //eslint-disable-line
+  const fileName = args.logdir + '/' + timestamp + '_' + uuid.v1() + '.json';
+  try {
+    fs.writeFileSync(fileName, JSON.stringify(req.body));
+  } catch (err) {
+    console.error(now() + ': ' + err);
+
+    res.status(HTTP_INTERNALERROR_CODE);
+    res.send({
+      code: config.vroomErrorCodes.internal,
+      error: 'Internal error'
+    });
+    return;
+  }
+
   reqOptions.push('-i ' + fileName);
 
   const vroom = spawn(vroomCommand, reqOptions, {shell: true});
@@ -216,10 +250,13 @@ const execCallback = function(req, res) {
         // Routing error.
         res.status(HTTP_INTERNALERROR_CODE);
         break;
-      case 127: //eslint-disable-line
-        // vroom not found on command line
+      default:
+        // Required for e.g. vroom crash or missing command in $PATH.
         res.status(HTTP_INTERNALERROR_CODE);
-        break;
+        solution = {
+          code: config.vroomErrorCodes.internal,
+          error: 'Internal error'
+        };
     }
     res.send(solution);
 
@@ -229,10 +266,44 @@ const execCallback = function(req, res) {
   });
 };
 
+
+//PATCH FOR SMARTBIN jupyter
+//app.post('/', [
 app.post('/optimization', [
-  sizeCheckCallback(args.maxjobs, args.maxvehicles),
+  sizeCheckCallback(args.maxlocations, args.maxvehicles),
   execCallback
 ]);
+
+// set the health endpoint with some small problem
+app.get('/health', (req, res) => {
+  const vroom = spawn(
+    vroomCommand,
+    ['-i', './healthchecks/vroom_custom_matrix.json'],
+    {shell: true}
+  );
+
+  let msg = 'healthy';
+  let status = HTTP_OK_CODE;
+
+  vroom.on('error', () => {
+    // only called when vroom not in cliArgs.path or PATH
+    msg = 'vroom is not in $PATH, check cliArgs.path in config.yml';
+    status = HTTP_INTERNALERROR_CODE;
+  });
+
+  vroom.stderr.on('data', err => {
+    // called when vroom throws an error and sends the error message back
+    msg = err.toString();
+    status = HTTP_INTERNALERROR_CODE;
+  });
+
+  vroom.on('close', code => {
+    if (code !== config.vroomErrorCodes.ok) {
+      console.error(`${now()}: ${msg}`);
+    }
+    res.status(status).send();
+  });
+});
 
 const server = app.listen(args.port, () => {
   console.log('vroom-express listening on port ' + args.port + '!');
