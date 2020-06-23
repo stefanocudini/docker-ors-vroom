@@ -1,0 +1,10 @@
+
+Using Dockefile_versioning in ../docker-compose.yml 
+
+it's enable use of this args building:
+args:
+    VROOM_RELEASE: v1.6.0
+    VROOM_EXPRESS_RELEASE: v0.6.0
+
+otherwise Dockerfile build always vroom, from here: 
+https://github.com/DigitalCommonsLab/vroom.git
