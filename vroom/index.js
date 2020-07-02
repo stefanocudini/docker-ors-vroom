@@ -33,6 +33,8 @@ const accessLogStream = fs.createWriteStream(args.logdir + '/access.log', {
   flags: 'a'
 });
 
+const baseurl = args.baseurl || '/';
+
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.use(helmet());
@@ -266,16 +268,18 @@ const execCallback = function(req, res) {
   });
 };
 
-
-//PATCH FOR SMARTBIN jupyter
-//app.post('/', [
-app.post('/optimization', [
+app.post(baseurl, [
   sizeCheckCallback(args.maxlocations, args.maxvehicles),
   execCallback
 ]);
 
+app.get(baseurl+'config', (req, res) =>  {
+	res.send(config)
+});
+
+
 // set the health endpoint with some small problem
-app.get('/health', (req, res) => {
+app.get(baseurl+'health', (req, res) => {
   const vroom = spawn(
     vroomCommand,
     ['-i', './healthchecks/vroom_custom_matrix.json'],

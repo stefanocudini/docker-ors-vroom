@@ -11,6 +11,7 @@ cliArgs:
   port: 8081 # expressjs port
   router: 'ors' # routing backend (osrm, libosrm or ors)
   timeout: 300000 # milli-seconds
+  baseurl: '/optimization/'
 routingServers:
   ors:
     driving-car:

@@ -76,7 +76,7 @@ services:
       #- ORS_HOST=192.168.1.7
       #- ORS_PORT=9090
     volumes:
-    #  - ./vroom/config.js:/vroom-express/src/config.js
+      - ./vroom/config.js:/vroom-express/src/config.js
       - ./vroom/index.js:/vroom-express/src/index.js
       - ./vroom/conf/:/conf
     restart: always
