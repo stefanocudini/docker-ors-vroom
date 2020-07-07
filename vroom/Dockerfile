@@ -1,37 +1,64 @@
-FROM ubuntu:18.04
+#original: https://github.com/VROOM-Project/vroom-docker
 
-RUN	apt-get update
-RUN mkdir -p /src
-RUN cd /src
+FROM debian:buster-slim as builder
+LABEL maintainer=nils@gis-ops.com
 
-ENV VROOM_BRANCH master
-RUN	apt-get install -qq \
-		build-essential \
-		g++ \
-		git-core \
-		libboost-all-dev \
-		make \
-		pkg-config && \
-	git clone https://github.com/DigitalCommonsLab/vroom.git /src/vroom && \
-	mkdir -p /src/vroom/bin && \
-	cd /src/vroom/src && \
-	make && \
-	cp /src/vroom/bin/vroom /usr/local/bin/
+WORKDIR /
 
-RUN	cd /
+RUN echo "Updating apt-get and installing dependencies..." && \
+  apt-get -y update > /dev/null && apt-get -y install > /dev/null \
+  git-core \
+  build-essential \
+	g++ \
+  libssl-dev \
+	libboost-all-dev \
+	pkg-config
 
-ENV VROOM_EXPRESS_BRANCH master
-#RUN apt-get update && \
-RUN	apt-get install -qq \
-		npm \
-		nodejs && \
-	git clone https://github.com/DigitalCommonsLab/vroom-express.git /vroom-express && \
-	cd /vroom-express && \
-	npm install
+ARG VROOM_RELEASE=v1.6.0
 
-#COPY config.js /vroom-express/src/config.js
+RUN echo "Cloning and installing vroom release ${VROOM_RELEASE}..." && \
+    git clone https://github.com/VROOM-Project/vroom.git && \
+    cd vroom && \
+    git fetch --tags && \
+    git checkout -q $VROOM_RELEASE && \
+    make -C /vroom/src && \
+    cd /
 
-RUN	apt-get clean && cd /
+# TODO: change to release version again
+ARG VROOM_EXPRESS_RELEASE=v0.6.0
+
+RUN echo "Cloning and installing vroom-express release ${VROOM_EXPRESS_RELEASE}..." && \
+    git clone https://github.com/VROOM-Project/vroom-express.git && \
+    cd vroom-express && \
+    git fetch --tags && \
+    git checkout $VROOM_EXPRESS_RELEASE
+
+FROM node:12-buster-slim as runstage
+COPY --from=builder /vroom-express/. /vroom-express
+COPY --from=builder /vroom/bin/vroom /usr/local/bin
+
+WORKDIR /vroom-express
+
+RUN apt-get update > /dev/null && \
+    apt-get install -y --no-install-recommends \
+      libssl1.1 \
+    	libboost-system1.67.0 \
+      curl \
+      > /dev/null && \
+    rm -rf /var/lib/apt/lists/* && \
+    # Install vroom-express
+    npm config set loglevel error && \
+    npm install && \
+    # To share the config.yml & access.log file with the host
+    mkdir /conf
+
+
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+ENV VROOM_DOCKER=osrm \
+    VROOM_LOG=/conf
+
+HEALTHCHECK --start-period=10s CMD curl --fail -s http://localhost:3000/health || exit 1
 
 EXPOSE 3000
-CMD ["npm", "start", "--prefix", "/vroom-express"]
+ENTRYPOINT ["/bin/bash"]
+CMD ["/docker-entrypoint.sh"]

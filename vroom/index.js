@@ -33,6 +33,12 @@ const accessLogStream = fs.createWriteStream(args.logdir + '/access.log', {
   flags: 'a'
 });
 
+if (typeof args.baseurl != 'string')
+	args.baseurl = '/';
+
+else if (args.baseurl.substr(-1) != '/')
+	args.baseurl += '/';
+
 const baseurl = args.baseurl || '/';
 
 app.use(morgan('combined', {stream: accessLogStream}));
@@ -272,11 +278,6 @@ app.post(baseurl, [
   sizeCheckCallback(args.maxlocations, args.maxvehicles),
   execCallback
 ]);
-
-app.get(baseurl+'config', (req, res) =>  {
-	res.send(config)
-});
-
 
 // set the health endpoint with some small problem
 app.get(baseurl+'health', (req, res) => {

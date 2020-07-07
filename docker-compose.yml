@@ -38,6 +38,7 @@ services:
       #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
     restart: always
 
+  #ors-proxy is useful for logging vroom to ors and using custom restrictions value of profile vehicle
   ors-proxy:
     container_name: smartbin-ors-proxy
     image: smartbin-ors-proxy:latest
@@ -59,7 +60,6 @@ services:
     image: smartbin-vroom:versioning
     build:
       context: ./vroom/
-      dockerfile: Dockerfile_versioning
       args:
         VROOM_RELEASE: v1.6.0
         VROOM_EXPRESS_RELEASE: v0.6.0
@@ -71,9 +71,6 @@ services:
       - ORS_PORT=8080
       #ORS-PROXY
       #- ORS_HOST=ors-proxy
-      #- ORS_PORT=9090
-      #DEBUG
-      #- ORS_HOST=192.168.1.7
       #- ORS_PORT=9090
     volumes:
       - ./vroom/config.js:/vroom-express/src/config.js
