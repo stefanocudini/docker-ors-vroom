@@ -12,9 +12,12 @@ Use OpenRouteService Optimization API with VROOM
 https://openrouteservice.org/dev/#/api-docs/optimization/post
 
 
-## Configuration
+## Configuration files
 
-./ors/config.json
+- ./docker-compose.yml
+- ./ors/config.json
+- ./vroom/conf/config.yml
+- ./ors-proxy/config.js
 
 ### Config documentation
 
@@ -22,29 +25,7 @@ https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config)
 
 ### Enable ORS proxy
 
-in file docke-compose.yml uncomment in section *vroom*, the lines:
-```
-  - ORS_HOST=ors-proxy
-  - ORS_PORT=9090
-```
-```
- vroom:
-    container_name: smartbin-vroom
-    image: smartbin-vroom:latest
-    build:
-      context: ./vroom/
-    ports: ["8081:8081"]
-    environment:
-      #ORS DIRECT
-#      - ORS_HOST=ors
-#      - ORS_PORT=8080
-      #ORS-PROXY
-      - ORS_HOST=ors-proxy
-      - ORS_PORT=9090
-      #DEBUG
-      #- ORS_HOST=192.168.1.7
-      #- ORS_PORT=9090
-```
+in file  vroom/conf/config.yml replace 'ors' with 'ors-proxy'
 
 # Setup
 

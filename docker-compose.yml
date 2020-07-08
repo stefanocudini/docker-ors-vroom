@@ -54,27 +54,16 @@ services:
     depends_on:
       - ors
 
-  vroom:
-    #network_mode: host    
+  vroom: 
     container_name: smartbin-vroom
-    image: smartbin-vroom:versioning
+    image: smartbin-vroom:latest
     build:
       context: ./vroom/
       args:
         VROOM_RELEASE: v1.6.0
-        VROOM_EXPRESS_RELEASE: v0.6.0
+        VROOM_EXPRESS_RELEASE: v0.7.0
     ports: ["8081:8081"]
-    environment:
-      - VROOM_ROUTER=ors  # router to use, osrm or ors
-      #ORS DIRECT
-      - ORS_HOST=ors
-      - ORS_PORT=8080
-      #ORS-PROXY
-      #- ORS_HOST=ors-proxy
-      #- ORS_PORT=9090
     volumes:
-      - ./vroom/config.js:/vroom-express/src/config.js
-      - ./vroom/index.js:/vroom-express/src/index.js
       - ./vroom/conf/:/conf
     restart: always
     depends_on:
