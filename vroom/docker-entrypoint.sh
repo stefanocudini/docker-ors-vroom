@@ -10,8 +10,8 @@ else
 fi
 
 # Create access.log if it doesn't exist
-if ! test -f /conf/access.log; then
-  touch /conf/access.log
-fi
+# if ! test -f /conf/access.log; then
+#   touch /conf/access.log
+# fi
 
 cd /vroom-express && VROOM_ROUTER=${VROOM_ROUTER} VROOM_LOG=${VROOM_LOG} npm start
