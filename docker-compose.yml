@@ -22,7 +22,7 @@ services:
       - CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost"
     volumes:
       - ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config:ro
-      - ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
+      - ./graphs/:/ors-core/data/graphs
       - ./elevation_cache/:/ors-core/data/elevation_cache/
       - ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf
       #
@@ -40,20 +40,20 @@ services:
 
   #ors-proxy is useful for logging requestes/resposes from vroom to ors 
   #  and allow use of custom restrictions value of profile vehicle
-  ors-proxy:
-    container_name: smartbin-ors-proxy
-    image: smartbin-ors-proxy:latest
-    build:
-      context: ./ors-proxy/
-    ports: ["9090:9090"]
-    environment:
-      - ORS_HOST=ors
-      - ORS_PORT=8080
-    volumes:
-      - ./ors-proxy/config.js:/ors-proxy/config.js:ro
-    #restart: always
-    depends_on:
-      - ors
+  # ors-proxy:
+  #   container_name: smartbin-ors-proxy
+  #   image: smartbin-ors-proxy:latest
+  #   build:
+  #     context: ./ors-proxy/
+  #   ports: ["9090:9090"]
+  #   environment:
+  #     - ORS_HOST=ors
+  #     - ORS_PORT=8080
+  #   volumes:
+  #     - ./ors-proxy/config.js:/ors-proxy/config.js:ro
+  #   #restart: always
+  #   depends_on:
+  #     - ors
 
   vroom: 
     container_name: smartbin-vroom
@@ -70,28 +70,28 @@ services:
     depends_on:
       - ors
 
-  ors-app:
-    container_name: smartbin-ors-app
-    image: smartbin-ors-app:latest
-    build:
-      context: ./ors-app/
-    ports: ["8082:3035"]
-    volumes:
-      - ./ors-app/build:/ors-app/app/build
-      - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
-    depends_on:
-      - ors
+  # ors-app:
+  #   container_name: smartbin-ors-app
+  #   image: smartbin-ors-app:latest
+  #   build:
+  #     context: ./ors-app/
+  #   ports: ["8082:3035"]
+  #   volumes:
+  #     - ./ors-app/build:/ors-app/app/build
+  #     - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
+  #   depends_on:
+  #     - ors
 
-  vroom-app:
-    container_name: smartbin-vroom-app
-    image: smartbin-vroom-app
-    build:
-      context: ./vroom-app/
-    ports: ["8083:9966"]
-    volumes:
-      - ./vroom-app/config.js:/vroom-app/src/config/api.js
-    depends_on:
-      - vroom
+  # vroom-app:
+  #   container_name: smartbin-vroom-app
+  #   image: smartbin-vroom-app
+  #   build:
+  #     context: ./vroom-app/
+  #   ports: ["8083:9966"]
+  #   volumes:
+  #     - ./vroom-app/config.js:/vroom-app/src/config/api.js
+  #   depends_on:
+  #     - vroom
 
   jupyter:
     container_name: smartbin-jupyter
