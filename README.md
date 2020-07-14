@@ -1,5 +1,5 @@
 
-# Docker Application to solve VRP(Vehicle Routing Problem) using OpenRouteService and VROOM
+# Docker Application to solve Vehicle Routing Problem using OpenRouteService and VROOM
 
 ## TSP Travel Salesman Problem
 
