@@ -2,9 +2,13 @@
 # Docker VRP(Vehicle Routing Problem) OpenRouteService with VROOM
 
 TSP Travel Salesman Problem
+*the optimal route to cross all positions*
 ![TSP Algorithm](/data/tsp.png)
 
 VRP Vehicle Routing Problem
+
+*the numbers above the markers represent the quantity of material to be loaded on the vehicle*
+
 ![VRP Algorithm](/data/vrp.png)
 
 
