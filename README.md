@@ -3,13 +3,13 @@
 
 ## TSP Travel Salesman Problem
 
-*the optimal route to cross all positions*
+*1 vehicle 2 optimal routes to cross all positions*
 
 ![TSP Algorithm](/data/tsp.png)
 
 ## VRP Vehicle Routing Problem
 
-*the numbers above the markers represent the quantity of material to be loaded on the vehicle*
+*2 Vechicles, the numbers above the markers represent the quantity of material to be loaded on the vehicle*
 
 ![VRP Algorithm](/data/vrp.png)
 
