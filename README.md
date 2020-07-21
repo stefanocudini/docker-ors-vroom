@@ -45,7 +45,7 @@ git clone https://github.com/DigitalCommonsLab/docker-ors-vroom.git
 cd docker-ors-vroom
 ```
 
-Download OpenRouteService
+Download OpenRouteService v6.0.0
 ```bash
 git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
 cp ./ors/config.json ./ors/openrouteservice/docker/conf/config.json
