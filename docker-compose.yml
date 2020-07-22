@@ -8,34 +8,38 @@ services:
   ors:
     container_name: smartbin-ors
     ports: ["8080:8080"]
-    image: smartbin-ors:latest
-    build:
-      context: ./ors/openrouteservice/
-      args:
-          APP_CONFIG: ./docker/conf/config.json
-          OSM_FILE: ./docker/data/povo.osm.gz
-          #JAVA_OPTS: -Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms1g -Xmx2g
-          #CATALINA_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
+    image: openrouteservice/openrouteservice:v6.2.0
+    #image: smartbin-ors:latest
+    # image: smartbin-ors:v6.2.0
+    # build:
+    #   context: ./ors/openrouteservice/
+    #   args:
+    #       APP_CONFIG: ./docker/conf/config.json
+    #       OSM_FILE: ./docker/data/povo.osm.gz
+    #       #don't change, it auto download srtm around trentino
     environment:
-      - BUILD_GRAPHS=False  # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
+      - BUILD_GRAPHS=True  # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
       - JAVA_OPTS="-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms1g -Xmx2g"
       - CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost"
     volumes:
-      - ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config:ro
-      - ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
-      - ./elevation_cache/:/ors-core/data/elevation_cache/
-      - ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
-      #
-      ##povo
-      #- ./graphs.povo/:/ors-core/data/graphs
-      #- ./elevation_cache_lidar/:/ors-core/data/elevation_cache/
-      #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
-
+      #- ./ors/config.json:/ors-core/openrouteservice/target/classes/app.config:ro
+      - ./ors/conf:/ors-conf
       - ./logs/:/var/log/ors/
       - ./logs/:/usr/local/tomcat/logs/
-      #default config - ./ors/app.config.sample:/ors-core/openrouteservice/target/classes/app.config
-      #default data - ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
-      #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
+      - ./elevation_cache/:/ors-core/data/elevation_cache/      
+      ## Mezzocorona
+      #- ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
+      #- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
+      #
+      ## Povo
+      #- ./graphs.povo/:/ors-core/data/graphs
+      #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
+      #- ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
+      #
+      ## Trentino Alto Adige
+      - ./graphs.trentino/:/ors-core/data/graphs
+      - ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
+      #
     restart: always
 
   #ors-proxy is useful for logging requestes/resposes from vroom to ors 
