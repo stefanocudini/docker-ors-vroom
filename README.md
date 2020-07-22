@@ -20,7 +20,7 @@ https://openrouteservice.org/dev/#/api-docs/optimization/post
 ## Configuration files
 
 - ./docker-compose.yml
-- ./ors/config.json
+- ./ors/conf/app.config
 - ./vroom/conf/config.yml
 - ./ors-proxy/config.js
 
@@ -30,7 +30,7 @@ https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config)
 
 ### Enable ORS proxy
 
-ors-proxy is a work around to manage road restrictions in vroom results.
+ors-proxy is a work-around to manage osm road restrictions in vroom results
 To test restrictions use volume:  ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf 
 run ors-proxy service:
 	docker-compose up -d ors-proxy
@@ -45,16 +45,13 @@ git clone https://github.com/DigitalCommonsLab/docker-ors-vroom.git
 cd docker-ors-vroom
 ```
 
-Download OpenRouteService v6.0.0
-```bash
-git clone https://github.com/DigitalCommonsLab/openrouteservice.git ./ors/openrouteservice
-cp ./ors/config.json ./ors/openrouteservice/docker/conf/config.json
-```
-
 add custom Openstreetmap test data in OpenRouteService data dir
 
+in file ```docker-compose.yml```
+comment line ```- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf```
+uncomment line ```#- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf```
+
 ```bash
-cp ./data/mezzocorona.osm.pbf ./ors/openrouteservice/docker/data/mezzocorona.osm.pbf
 docker-compose up -d
 ```
 first time the images building require some minutes...
