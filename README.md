@@ -45,16 +45,11 @@ git clone https://github.com/DigitalCommonsLab/docker-ors-vroom.git
 cd docker-ors-vroom
 ```
 
-add custom Openstreetmap test data in OpenRouteService data dir
-
-in file ```docker-compose.yml```
-comment line ```- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf```
-uncomment line ```#- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf```
-
 ```bash
 docker-compose up -d
 ```
 first time the images building require some minutes...
+first time graphs generation require some minutes... and require one restart of container
 
 monitoring of routing engines(optional)
 ```bash
