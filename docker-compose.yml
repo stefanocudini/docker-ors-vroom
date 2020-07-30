@@ -35,7 +35,7 @@ services:
       #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
       #- ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
       #
-    restart: always
+#    restart: always
 
   #ors-proxy is useful for logging requestes/resposes from vroom to ors 
   #  and allow use of custom restrictions value of profile vehicle
@@ -67,7 +67,7 @@ services:
     volumes:
       #- ./vroom/conf/:/conf
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
-    restart: always
+#    restart: always
     depends_on:
       - ors
 
