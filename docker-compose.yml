@@ -24,11 +24,11 @@ services:
       - ./graphs:/ors-core/data/graphs
       #
       ## Trentino Alto Adige
-      #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
+      - ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
       #
       ## Mezzocorona
       #- ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
-      - ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
+      #- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
       #
       ## Povo
       #- ./graphs.povo/:/ors-core/data/graphs
@@ -71,23 +71,25 @@ services:
     depends_on:
       - ors
 
-  # ors-app:
-  #   container_name: smartbin-ors-app
-  #   image: smartbin-ors-app:latest
-  #   build:
-  #     context: ./ors-app/
-  #   ports: ["8082:3035"]
-  #   volumes:
-  #     - ./ors-app/build:/ors-app/app/build
-  #     - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
-  #   depends_on:
-  #     - ors
+  ors-app:
+    container_name: smartbin-ors-app
+    image: smartbin-ors-app:latest
+    build:
+      context: ./ors-app/
+    ports: ["8082:3035"]
+    volumes:
+      - ./ors-app/build:/ors-app/app/build
+      - ./ors-app/Gruntfile.js:/ors-app/Gruntfile.js
+    depends_on:
+      - ors
 
   vroom-app:
     container_name: smartbin-vroom-app
     image: smartbin-vroom-app
     build:
       context: ./vroom-app/
+      args:
+        ORSAPP_RELEASE: v0.4.3
     ports: ["8083:9966"]
     volumes:
       - ./vroom-app/config.js:/vroom-app/src/config/api.js

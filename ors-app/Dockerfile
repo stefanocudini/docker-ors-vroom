@@ -8,15 +8,19 @@ RUN apt-get install -qq \
 	nodejs
 
 RUN	git clone https://github.com/DigitalCommonsLab/openrouteservice-app.git /ors-app
+#RUN git clone https://github.com/GIScience/openrouteservice-app.git /ors-app && \
+#	cd /ors-app && \
+#	git fetch --tags && \
+#	git checkout -q $ORSAPP_RELEASE
 
 WORKDIR /ors-app
 
-RUN	npm install -g bower && \
-	npm install -g grunt-cli && \
-	npm install && \
-	node_modules/bower/bin/bower install --allow-root && \
-	cd bower_components/angularjs-slider && \
-	npm install
+RUN	npm install -g bower
+RUN	npm install -g grunt-cli
+RUN	npm install
+RUN	node_modules/bower/bin/bower install --allow-root
+RUN	cd /ors-app/bower_components/angularjs-slider
+RUN	cd /ors-app && npm install
 
 # RUN cd /ors-app && \
 # 	grunt less:development && \
