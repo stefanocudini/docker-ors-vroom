@@ -7,20 +7,27 @@ RUN apt-get install -qq \
 	npm \
 	nodejs
 
-RUN	git clone https://github.com/DigitalCommonsLab/openrouteservice-app.git /ors-app
-#RUN git clone https://github.com/GIScience/openrouteservice-app.git /ors-app && \
-#	cd /ors-app && \
-#	git fetch --tags && \
-#	git checkout -q $ORSAPP_RELEASE
+#RUN	git clone https://github.com/DigitalCommonsLab/openrouteservice-app.git /ors-app
+
+ARG ORSAPP_RELEASE=v0.6.0
+
+RUN git clone https://github.com/GIScience/openrouteservice-app.git /ors-app && \
+	cd /ors-app && \
+	git fetch --tags && \
+	git checkout -q $ORSAPP_RELEASE
 
 WORKDIR /ors-app
 
-RUN	npm install -g bower
-RUN	npm install -g grunt-cli
+RUN npm install
+#RUN	npm install bower
+#RUN	npm install grunt-cli
+
 RUN	npm install
 RUN	node_modules/bower/bin/bower install --allow-root
+
 RUN	cd /ors-app/bower_components/angularjs-slider
-RUN	cd /ors-app && npm install
+RUN npm install
+RUN cd /ors-app
 
 # RUN cd /ors-app && \
 # 	grunt less:development && \
@@ -33,4 +40,4 @@ RUN	cd /ors-app && npm install
 
 EXPOSE 3035
 
-CMD ["grunt", "ors"]
+CMD ["node_modules/grunt-cli/bin/grunt","--force","ors"]

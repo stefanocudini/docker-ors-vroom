@@ -10,8 +10,8 @@ services:
     ports: ["8080:8080"]
     image: openrouteservice/openrouteservice:v6.2.0
     environment:
-      - BUILD_GRAPHS=True  # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
-      - JAVA_OPTS="-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -Xms1024M -Xmx2024M -XX:ParallelGCThreads=4"
+      - BUILD_GRAPHS=False  # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
+      - JAVA_OPTS="-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms500m -Xmx1g"
       - CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost"
     volumes:
       #PATCH for error "cp: cannot remove '/ors-conf/app.config': Read-only file system"
@@ -76,6 +76,8 @@ services:
     image: smartbin-ors-app:latest
     build:
       context: ./ors-app/
+      args:
+        ORSAPP_RELEASE: v0.6.0
     ports: ["8082:3035"]
     volumes:
       - ./ors-app/build:/ors-app/app/build
