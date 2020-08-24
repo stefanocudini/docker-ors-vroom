@@ -1,11 +1,16 @@
-FROM ubuntu:18.04
+#FROM ubuntu:18.04
+FROM node:10
 
 RUN	apt-get update -qq
 
 RUN apt-get install -qq \
-	git-core \
-	npm \
-	nodejs
+	git-core
+	# npm \
+	# nodejs
+
+RUN npm install -g npm@6.14.7
+#PATCH https://github.com/GIScience/openrouteservice-app/issues/343
+
 
 #RUN	git clone https://github.com/DigitalCommonsLab/openrouteservice-app.git /ors-app
 
