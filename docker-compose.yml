@@ -10,9 +10,10 @@ services:
     ports: ["8080:8080"]
     image: openrouteservice/openrouteservice:v6.2.0
     environment:
-      - BUILD_GRAPHS=False  # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
-      - JAVA_OPTS="-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms500m -Xmx1g"
-      - CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost"
+      - BUILD_GRAPHS=False
+      # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
+      - JAVA_OPTS=-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms512m -Xmx2000m -XX:MaxMetaspaceSize=2000m
+      - CATALINA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
     volumes:
       #PATCH for error "cp: cannot remove '/ors-conf/app.config': Read-only file system"
       - ./ors/docker-entrypoint.sh:/docker-entrypoint.sh:ro
@@ -21,10 +22,15 @@ services:
       - ./logs/:/var/log/ors/
       - ./logs/:/usr/local/tomcat/logs/
       - ./elevation_cache/:/ors-core/data/elevation_cache/
-      - ./graphs:/ors-core/data/graphs
+      #- ./graphs.italy:/ors-core/data/graphs
       #
       ## Trentino Alto Adige
+      - ./graphs.trentino:/ors-core/data/graphs
       - ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
+      #
+      ## Italia
+      #- ./graphs.italy:/ors-core/data/graphs
+      #- ./data/italy-latest.osm.pbf:/ors-core/data/osm_file.pbf
       #
       ## Mezzocorona
       #- ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
