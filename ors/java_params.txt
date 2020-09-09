@@ -29,7 +29,3 @@ root       29233 13.7 13.1 12649872 4330120 ?    Sl   19:47   2:25          \_
 -Djava.io.tmpdir=/usr/local/tomcat/temp org.apache.catalina.startup.Bootstrap
 
 start
-
-
-
-
