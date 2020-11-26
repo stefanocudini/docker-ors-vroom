@@ -46,20 +46,20 @@ services:
   # #ors-proxy is useful for logging requestes/resposes from vroom to ors 
   # # and allow use of custom restrictions value of profile vehicle
   # # to test restrictions use volume:  ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf 
-  # ors-proxy:
-  #   container_name: smartbin-ors-proxy
-  #   image: smartbin-ors-proxy:latest
-  #   build:
-  #     context: ./ors-proxy/
-  #   ports: ["9090:9090"]
-  #   environment:
-  #     - ORS_HOST=ors
-  #     - ORS_PORT=8080
-  #   volumes:
-  #     - ./ors-proxy/config.js:/ors-proxy/config.js:ro
-  #   #restart: always
-  #   depends_on:
-  #     - ors
+  ors-proxy:
+    container_name: smartbin-ors-proxy
+    image: smartbin-ors-proxy:latest
+    build:
+      context: ./ors-proxy/
+    ports: ["9090:9090"]
+    environment:
+      - ORS_HOST=ors
+      - ORS_PORT=8080
+    volumes:
+      - ./ors-proxy/config.js:/ors-proxy/config.js:ro
+    #restart: always
+    depends_on:
+      - ors
 
   vroom: 
     container_name: smartbin-vroom
@@ -71,7 +71,6 @@ services:
         VROOM_EXPRESS_RELEASE: v0.7.0
     ports: ["8081:8081"]
     volumes:
-      #- ./vroom/conf/:/conf
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
 #    restart: always
     depends_on:

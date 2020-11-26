@@ -10,5 +10,5 @@ vroom/vroom-src
 vroom/conf
 vroom/conf/access.log
 vroom-app/vroom-frontend
-node_modules
+**/node_modules
 package-lock.json

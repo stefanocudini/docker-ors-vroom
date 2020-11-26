@@ -31,7 +31,9 @@ https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config)
 ### Enable ORS proxy
 
 ors-proxy is a work-around to manage osm road restrictions in vroom results
-To test restrictions use volume:  ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf 
+To test restrictions use this volume:
+./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf 
+
 run ors-proxy service:
 	docker-compose up -d ors-proxy
 	
