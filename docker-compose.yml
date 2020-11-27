@@ -10,7 +10,7 @@ services:
     ports: ["8080:8080"]
     image: openrouteservice/openrouteservice:v6.2.0
     environment:
-      - BUILD_GRAPHS=True
+      - BUILD_GRAPHS=False
       # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
       - JAVA_OPTS=-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms512m -Xmx2000m -XX:MaxMetaspaceSize=2000m
       - CATALINA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
@@ -112,9 +112,10 @@ services:
     ports: ["8084:8888"]
     volumes:
       - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
+      - ./jupyter/data:/home/jovyan/data
       - ./jupyter/test.ipynb:/home/jovyan/test.ipynb
       - ./jupyter/test2.ipynb:/home/jovyan/test2.ipynb
-      - ./jupyter/data:/home/jovyan/data
+      - ./jupyter/test3.ipynb:/home/jovyan/test3.ipynb
     #restart: always
     depends_on:
       - ors
