@@ -15,7 +15,7 @@ USER $NB_UID
 # Install facets which does not have a pip or conda package at the moment
 #RUN fix-permissions /home/$NB_USER
 
-RUN pip install openrouteservice
+RUN pip install openrouteservice==2.3.0
 RUN pip install folium
 
 #TODO add ping for tests
