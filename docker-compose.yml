@@ -118,5 +118,6 @@ services:
     #restart: always
     depends_on:
       - ors
+      - ors-proxy
       - vroom
     

@@ -31,6 +31,14 @@ https://github.com/GIScience/openrouteservice/wiki/Configuration-(app.config)
 ### Enable ORS proxy
 
 ors-proxy is a work-around to manage osm road restrictions in vroom results
+```
+---------    -------------    ---------    -----------
+|  ORS  | <= | ORS-PROXY | <= | VROOM | <= | JUPYTER |
+---------    -------------    ---------    -----------
+                    |             ^
+                    v             |
+                LOGGING       config.yml
+```
 To test restrictions use this volume:
 ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf 
 
