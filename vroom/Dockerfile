@@ -8,9 +8,11 @@ WORKDIR /
 
 RUN echo "Updating apt-get and installing dependencies..." && \
   apt-get -y update > /dev/null && apt-get -y install > /dev/null \
+  apt-utils \
   git-core \
   build-essential \
 	g++ \
+  libasio-dev \
   libssl-dev \
 	libboost-all-dev \
 	pkg-config
@@ -55,10 +57,10 @@ RUN apt-get update > /dev/null && \
 
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-ENV VROOM_DOCKER=osrm \
+ENV VROOM_ROUTER=ors \
     VROOM_LOG=/conf
 
-HEALTHCHECK --start-period=10s CMD curl --fail -s http://localhost:3000/health || exit 1
+HEALTHCHECK --start-period=10s CMD curl --fail -s http://localhost:3000/optimization/health || exit 1
 
 EXPOSE 3000
 ENTRYPOINT ["/bin/bash"]

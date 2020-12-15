@@ -35,9 +35,9 @@ ors-proxy is a work-around to manage osm road restrictions in vroom results
 ---------    -------------    ---------    -----------
 |  ORS  | <= | ORS-PROXY | <= | VROOM | <= | JUPYTER |
 ---------    -------------    ---------    -----------
-                    |             ^
-                    v             |
-                LOGGING       config.yml
+                    |             ^             ^
+                    v             |             |
+                LOGGING       config.yml    test.ipynb
 ```
 To test restrictions use this volume:
 ./data/mezzocorona_restrictions.osm.pbf:/ors-core/data/osm_file.pbf 
@@ -45,7 +45,7 @@ To test restrictions use this volume:
 run ors-proxy service:
 	docker-compose up -d ors-proxy
 	
-and in file  vroom/conf/config.yml replace 'ors' with 'ors-proxy'
+and in file  vroom/conf/config.yml replace 'ors' with 'ors-proxy' port 9090
 
 # Setup
 
@@ -61,29 +61,33 @@ docker-compose up -d
 first time the images building require some minutes...
 first time graphs generation require some minutes... and require one restart of container
 
-monitoring of routing engines(optional)
+
+monitoring of routing engines
 ```bash
 docker logs -f smartbin-ors
 ```
 
-monitoring data packets from VROOM to ORS
+monitoring data packets from VROOM to ORS(optional require ors-proxy started)
+configure VROOM to port 9090
 ```bash
 docker-compose logs -f ors-proxy
 ```
 
 ## Testing OpenRouteService API
 
-brownser in:
-http://localhost:8080
 
-vehicles actives: "vehicles-hgv","bike",
+vehicles actives: "hgv","car" look at /ors/conf/app.config
 
+check if running, brownser in:
+
+http://localhost:8080/ors/health
 
 ## Testing VROOM API
 
 brownser in:
-http://localhost:8081
+http://localhost:8081/optimization
 
+if respose is http 200 ok, http://localhost:8081/optimization/health
 
 ## Testing OpenRouteService in Map
 
@@ -106,8 +110,11 @@ http://localhost:8083
 brownser in:
 http://localhost:8084
 
+load test3.ipynb notebook to test VROOM 1.8(shipments)
+https://github.com/VROOM-Project/vroom/blob/master/CHANGELOG.md
 
-### Testing OpenRouteService via python
+
+### Testing OpenRouteService via python(inside Jupyter)
 
 OpenRouteService python binding, clone or install via pip
 https://github.com/DigitalCommonsLab/openrouteservice-py

@@ -7,7 +7,7 @@ USER root
 
 # ffmpeg for matplotlib anim
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ffmpeg && \
+    apt-get install -y --no-install-recommends curl net-tools ffmpeg && \
     rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
@@ -15,8 +15,9 @@ USER $NB_UID
 # Install facets which does not have a pip or conda package at the moment
 #RUN fix-permissions /home/$NB_USER
 
-RUN pip install openrouteservice==2.3.0
+RUN pip install openrouteservice
 RUN pip install folium
+RUN pip install requests
 
 #TODO add ping for tests
 

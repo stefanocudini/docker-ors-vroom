@@ -8,7 +8,7 @@ cliArgs:
   maxvehicles: 1000 # max number of vehicles
   override: true # allow cli options override (-g, -t and -x)
   path: '' # VROOM path (if not in $PATH)
-  port: 8081 # expressjs port
+  port: 3000 # expressjs port
   router: 'ors' # routing backend (osrm, libosrm or ors)
   timeout: 300000 # milli-seconds
   baseurl: '/optimization/'
