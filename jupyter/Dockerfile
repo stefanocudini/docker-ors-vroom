@@ -7,7 +7,7 @@ USER root
 
 # ffmpeg for matplotlib anim
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl net-tools ffmpeg && \
+    apt-get install -y --no-install-recommends curl net-tools iputils-ping ffmpeg && \
     rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
