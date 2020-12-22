@@ -110,8 +110,11 @@ http://localhost:8083
 brownser in:
 http://localhost:8084
 
-load test3.ipynb notebook to test VROOM 1.8(shipments)
-https://github.com/VROOM-Project/vroom/blob/master/CHANGELOG.md
+## VROOM 1.8 with Shipments feature
+
+*load test3.ipynb notebook to test*
+
+https://github.com/VROOM-Project/vroom/blob/master/docs/API.md#shipments
 
 
 ### Testing OpenRouteService via python(inside Jupyter)
