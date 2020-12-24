@@ -17,6 +17,7 @@ services:
     volumes:
       #PATCH for error "cp: cannot remove '/ors-conf/app.config': Read-only file system"
       - ./ors/docker-entrypoint.sh:/docker-entrypoint.sh:ro
+      
       - ./ors/conf:/ors-conf:ro
       #
       - ./logs/:/var/log/ors/
