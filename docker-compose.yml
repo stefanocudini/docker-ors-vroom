@@ -65,7 +65,7 @@ services:
 
   vroom: 
     container_name: smartbin-vroom
-    image: smartbin-vroom:latest
+    image: smartbin-vroom:1.8.0
     build:
       context: ./vroom/
       args:
@@ -75,6 +75,8 @@ services:
     volumes:
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
 #    restart: always
+    #environment:
+    #  - VROOM_LOG=
     depends_on:
       - ors
 
