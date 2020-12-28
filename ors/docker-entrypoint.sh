@@ -23,11 +23,12 @@ fi
 if [ -d "/usr/local/tomcat/webapps/ors" ]; then
 	cp -f /ors-conf/app.config $tomcat_appconfig
 else
-#PATCH	cp -f $source_appconfig /ors-conf/app.config
-	cp -f $source_appconfig /ors-conf/app.config
+	cp -f /ors-conf/app.config $source_appconfig
+
+	#cp -f $source_appconfig /ors-conf/app.config
 ##	
 	echo "### Package openrouteservice and deploy to Tomcat ###"
-	mvn -q -f /ors-core/openrouteservice/pom.xml package -DskipTests && \
+	mvn -f /ors-core/openrouteservice/pom.xml package -DskipTests && \
 	cp -f /ors-core/openrouteservice/target/*.war /usr/local/tomcat/webapps/ors.war
 fi
 
