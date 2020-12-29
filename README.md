@@ -13,6 +13,13 @@
 
 ![VRP Algorithm](/data/vrp.png)
 
+## VRP Delivery
+
+*3 Vehicles that deliver material of various quantities*
+
+![VRP Algorithm](/data/delivery.png)
+
+
 References to OpenRouteService Optimization API
 https://openrouteservice.org/dev/#/api-docs/optimization/post
 
