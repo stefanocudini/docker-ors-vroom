@@ -76,7 +76,7 @@ services:
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
 #    restart: always
     #environment:
-    #  - VROOM_LOG=
+    #  - VROOM_LOG=./vroom/conf/
     depends_on:
       - ors
 
