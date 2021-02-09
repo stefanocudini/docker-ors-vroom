@@ -1,6 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG BASE_CONTAINER=jupyter/minimal-notebook
+ARG NB_UID=1001
+
 FROM $BASE_CONTAINER
 
 USER root

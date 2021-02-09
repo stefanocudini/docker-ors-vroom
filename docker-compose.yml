@@ -112,6 +112,8 @@ services:
     image: smartbin-jupyter:latest
     build:
       context: ./jupyter/
+      args:
+        NB_UID: "1001"
     ports: ["8084:8888"]
     volumes:
       - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
