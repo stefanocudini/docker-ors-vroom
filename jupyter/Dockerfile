@@ -15,7 +15,7 @@ RUN apt-get update && \
 USER $NB_UID
 
 # Install facets which does not have a pip or conda package at the moment
-#RUN fix-permissions /home/$NB_USER
+RUN fix-permissions /home/$NB_USER
 
 RUN pip install openrouteservice
 RUN pip install folium

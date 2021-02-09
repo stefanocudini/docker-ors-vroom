@@ -118,9 +118,7 @@ services:
     volumes:
       - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
       - ./jupyter/data:/home/jovyan/data
-      - ./jupyter/test.ipynb:/home/jovyan/test.ipynb
-      - ./jupyter/test2.ipynb:/home/jovyan/test2.ipynb
-      - ./jupyter/test3.ipynb:/home/jovyan/test3.ipynb
+      - ./jupyter/tests:/home/jovyan/tests
     #restart: always
     depends_on:
       - ors
