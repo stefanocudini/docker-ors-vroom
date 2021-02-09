@@ -122,6 +122,6 @@ services:
     #restart: always
     depends_on:
       - ors
-      - ors-proxy
+      #- ors-proxy
       - vroom
     
