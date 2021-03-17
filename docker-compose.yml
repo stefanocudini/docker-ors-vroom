@@ -26,17 +26,17 @@ services:
       #- ./graphs.italy:/ors-core/data/graphs
       #
       ## Trentino Alto Adige
-      - ./graphs.trentino:/ors-core/data/graphs
-      - ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
+      #- ./graphs.trentino:/ors-core/data/graphs
+      #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
       #
       ## Italia
       #- ./graphs.italy:/ors-core/data/graphs
       #- ./data/italy-latest.osm.pbf:/ors-core/data/osm_file.pbf
       #
-      ## Mezzocorona
-      #- ./graphs.mezzocorona.restrictions/:/ors-core/data/graphs
-      #- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
-      #
+      # Mezzocorona
+      - ./graphs.mezzocorona/:/ors-core/data/graphs
+      - ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
+      
       ## Povo
       #- ./graphs.povo/:/ors-core/data/graphs
       #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
