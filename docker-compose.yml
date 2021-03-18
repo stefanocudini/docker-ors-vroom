@@ -10,8 +10,8 @@ services:
     ports: ["8080:8080"]
     image: openrouteservice/openrouteservice:v6.2.0
     environment:
-      - BUILD_GRAPHS=False
-      # Forces the container to rebuild the graphs, e.g. when PBF is changed in app.config
+      - BUILD_GRAPHS=True
+      # Forces the container to rebuild ORS java
       - JAVA_OPTS=-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:ParallelGCThreads=4 -Xms512m -Xmx2000m -XX:MaxMetaspaceSize=2000m
       - CATALINA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
     volumes:
@@ -34,7 +34,7 @@ services:
       #- ./data/italy-latest.osm.pbf:/ors-core/data/osm_file.pbf
       #
       # Mezzocorona
-      - ./graphs.mezzocorona/:/ors-core/data/graphs
+      - ./graphs/:/ors-core/data/graphs
       - ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
       
       ## Povo
@@ -120,8 +120,8 @@ services:
       - ./jupyter/data:/home/jovyan/data
       - ./jupyter/tests:/home/jovyan/tests
     #restart: always
-    depends_on:
-      - ors
+    #depends_on:
+      #- ors
       #- ors-proxy
-      - vroom
+      #- vroom
     
