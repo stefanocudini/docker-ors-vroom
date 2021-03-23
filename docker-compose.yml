@@ -63,7 +63,7 @@ services:
     depends_on:
       - ors
 
-  vroom: 
+  vroom:
     container_name: smartbin-vroom
     image: smartbin-vroom:1.8.0
     build:
@@ -71,6 +71,8 @@ services:
       args:
         VROOM_RELEASE: v1.8.0
         VROOM_EXPRESS_RELEASE: v0.7.0
+        # VROOM_RELEASE: v1.9.0
+        # VROOM_EXPRESS_RELEASE: v0.8.0        
     ports: ["8081:3000"]
     volumes:
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
