@@ -1,0 +1,62 @@
+{
+  "code": 0,
+  "summary": {
+    "cost": 5461,
+    "unassigned": 0,
+    "service": 0,
+    "duration": 5461,
+    "waiting_time": 0,
+    "priority": 0,
+    "violations": []
+  },
+  "unassigned": [],
+  "routes": [
+    {
+      "vehicle": 0,
+      "cost": 5461,
+      "service": 0,
+      "duration": 5461,
+      "waiting_time": 0,
+      "priority": 0,
+      "steps": [
+        {
+          "type": "start",
+          "service": 0,
+          "waiting_time": 0,
+          "arrival": 0,
+          "duration": 0,
+          "violations": []
+        },
+        {
+          "type": "job",
+          "id": 1414,
+          "service": 0,
+          "waiting_time": 0,
+          "job": 1414,
+          "arrival": 2104,
+          "duration": 2104,
+          "violations": []
+        },
+        {
+          "type": "job",
+          "id": 1515,
+          "service": 0,
+          "waiting_time": 0,
+          "job": 1515,
+          "arrival": 4359,
+          "duration": 4359,
+          "violations": []
+        },
+        {
+          "type": "end",
+          "service": 0,
+          "waiting_time": 0,
+          "arrival": 5461,
+          "duration": 5461,
+          "violations": []
+        }
+      ],
+      "violations": []
+    }
+  ]
+}
