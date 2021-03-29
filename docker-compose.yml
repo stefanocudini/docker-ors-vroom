@@ -5,6 +5,25 @@ networks:
     driver: bridge
 
 services:
+
+  jupyter:
+    container_name: smartbin-jupyter
+    image: smartbin-jupyter:latest
+    build:
+      context: ./jupyter/
+      args:
+        NB_UID: "1001"
+    ports: ["80:8888"]
+    volumes:
+      - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
+      - ./jupyter/data:/home/jovyan/data
+      - ./jupyter/tests:/home/jovyan/tests
+    #restart: always
+    #depends_on:
+      #- ors
+      #- ors-proxy
+      #- vroom
+
   ors:
     container_name: smartbin-ors
     ports: ["8080:8080"]
@@ -72,12 +91,14 @@ services:
         VROOM_RELEASE: v1.8.0
         VROOM_EXPRESS_RELEASE: v0.7.0
         # VROOM_RELEASE: v1.9.0
-        # VROOM_EXPRESS_RELEASE: v0.8.0        
+        # VROOM_EXPRESS_RELEASE: v0.8.0       
     ports: ["8081:3000"]
     volumes:
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
 #    restart: always
-    #environment:
+    environment:
+      - ORS_HOST=ors
+      - ORS_PORT=8080
     #  - VROOM_LOG=./vroom/conf/
     depends_on:
       - ors
@@ -108,22 +129,3 @@ services:
       - ./vroom-app/config.js:/vroom-app/src/config/api.js
     depends_on:
       - vroom
-
-  jupyter:
-    container_name: smartbin-jupyter
-    image: smartbin-jupyter:latest
-    build:
-      context: ./jupyter/
-      args:
-        NB_UID: "1001"
-    ports: ["8084:8888"]
-    volumes:
-      - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
-      - ./jupyter/data:/home/jovyan/data
-      - ./jupyter/tests:/home/jovyan/tests
-    #restart: always
-    #depends_on:
-      #- ors
-      #- ors-proxy
-      #- vroom
-    
