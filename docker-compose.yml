@@ -19,10 +19,10 @@ services:
       - ./jupyter/data:/home/jovyan/data
       - ./jupyter/tests:/home/jovyan/tests
     #restart: always
-    #depends_on:
+    depends_on:
       #- ors
       #- ors-proxy
-      #- vroom
+      - vroom
 
   ors:
     container_name: smartbin-ors
