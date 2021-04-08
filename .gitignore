@@ -4,7 +4,7 @@ logs/*
 graphs*
 elevation_cache*
 data/*
-jupyter/.ipynb_checkpoints/*
+jupyter/tests/.ipynb_checkpoints/*
 vroom/vroom-scripts
 vroom/vroom-src
 vroom/conf
@@ -12,3 +12,4 @@ vroom/conf/access.log
 vroom-app/vroom-frontend
 **/node_modules
 package-lock.json
+jupyter/tests/.ipynb_checkpoints/*
