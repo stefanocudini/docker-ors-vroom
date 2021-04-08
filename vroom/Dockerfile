@@ -17,7 +17,7 @@ RUN echo "Updating apt-get and installing dependencies..." && \
 	libboost-all-dev \
 	pkg-config
 
-ARG VROOM_RELEASE=v1.6.0
+ARG VROOM_RELEASE=v1.8.0
 
 RUN echo "Cloning and installing vroom release ${VROOM_RELEASE}..." && \
     git clone https://github.com/VROOM-Project/vroom.git && \
