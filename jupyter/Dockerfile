@@ -20,6 +20,7 @@ RUN fix-permissions /home/$NB_USER
 RUN pip install openrouteservice
 RUN pip install folium
 RUN pip install requests
+RUN pip install polyline
 
 #TODO add ping for tests
 
