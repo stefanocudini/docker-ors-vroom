@@ -13,7 +13,7 @@ services:
       context: ./jupyter/
       args:
         NB_UID: "1001"
-    ports: ["80:8888"]
+    ports: ["8090:8888"]
     volumes:
       - ./jupyter/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
       - ./jupyter/data:/home/jovyan/data
