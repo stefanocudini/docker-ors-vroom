@@ -92,7 +92,7 @@ http://localhost:8080/ors/health
 ## Testing VROOM API
 
 brownser in:
-http://localhost:8081/optimization
+http://localhost:8084/optimization
 
 if respose is http 200 ok, http://localhost:8081/optimization/health
 
@@ -115,7 +115,7 @@ http://localhost:8083
 * *./jupyter/test.ipynb* python notebook to test Routing Algorithms by OpenRouteService python binding
 
 brownser in:
-http://localhost:8084
+http://localhost:8090
 
 ## VROOM 1.8 with Shipments feature
 
