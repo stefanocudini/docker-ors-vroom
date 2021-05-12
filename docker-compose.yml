@@ -24,6 +24,26 @@ services:
       #- ors-proxy
       #- vroom
 
+  vroom:
+    container_name: smartbin-vroom
+    image: smartbin-vroom:1.8.0
+    build:
+      context: ./vroom/
+      args:
+        VROOM_RELEASE: v1.8.0
+        VROOM_EXPRESS_RELEASE: v0.7.0
+        # VROOM_RELEASE: v1.9.0
+        # VROOM_EXPRESS_RELEASE: v0.8.0       
+    ports: ["8084:3000"]
+    volumes:
+      - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
+    environment:
+      - ORS_HOST=ors
+      - ORS_PORT=8080
+    #  - VROOM_LOG=./vroom/conf/
+    depends_on:
+      - ors
+
   ors:
     container_name: smartbin-ors
     ports: ["8080:8080"]
@@ -53,8 +73,11 @@ services:
       #- ./data/italy-latest.osm.pbf:/ors-core/data/osm_file.pbf
       #
       # Mezzocorona
-      - ./graphs/:/ors-core/data/graphs
-      - ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
+      #- ./graphs/:/ors-core/data/graphs
+      #- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
+      # Cuneo
+      - ./graphs.cuneo/:/ors-core/data/graphs
+      - ./data/cuneo.osm.pbf:/ors-core/data/osm_file.pbf
       
       ## Povo
       #- ./graphs.povo/:/ors-core/data/graphs
@@ -81,26 +104,6 @@ services:
     #restart: always
     depends_on:
       - ors
-
-  vroom:
-    container_name: smartbin-vroom
-    image: smartbin-vroom:1.8.0
-    build:
-      context: ./vroom/
-      args:
-        VROOM_RELEASE: v1.8.0
-        VROOM_EXPRESS_RELEASE: v0.7.0
-        # VROOM_RELEASE: v1.9.0
-        # VROOM_EXPRESS_RELEASE: v0.8.0       
-    ports: ["8084:3000"]
-    volumes:
-      - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
-    environment:
-      - ORS_HOST=0.0.0.0
-      - ORS_PORT=8080
-    #  - VROOM_LOG=./vroom/conf/
-    #depends_on:
-    #  - ors
 
   ors-app:
     container_name: smartbin-ors-app
