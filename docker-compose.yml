@@ -77,7 +77,7 @@ services:
       #- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
       # Cuneo
       - ./graphs.cuneo/:/ors-core/data/graphs
-      - ./data/cuneo.osm.pbf:/ors-core/data/osm_file.pbf
+      - /home/z4k/docker-ors-vroom/data/cuneo.osm.pbf:/ors-core/data/osm_file.pbf
       
       ## Povo
       #- ./graphs.povo/:/ors-core/data/graphs
