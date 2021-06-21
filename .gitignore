@@ -1,6 +1,7 @@
 .env
 .docker-compose.yml.swp
 logs/*
+logs2/*
 graphs*
 elevation_cache*
 data/*
