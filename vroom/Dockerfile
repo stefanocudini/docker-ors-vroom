@@ -13,22 +13,23 @@ RUN echo "Updating apt-get and installing dependencies..." && \
   build-essential \
 	g++ \
   libasio-dev \
+  libglpk-dev \
   libssl-dev \
 	libboost-all-dev \
 	pkg-config
 
-ARG VROOM_RELEASE=v1.8.0
+ARG VROOM_RELEASE=v1.10.0
 
 RUN echo "Cloning and installing vroom release ${VROOM_RELEASE}..." && \
     git clone https://github.com/VROOM-Project/vroom.git && \
     cd vroom && \
     git fetch --tags && \
     git checkout -q $VROOM_RELEASE && \
-    make -C /vroom/src && \
+    make -C /vroom/src -j$(nproc) && \
     cd /
 
 # TODO: change to release version again
-ARG VROOM_EXPRESS_RELEASE=v0.7.0
+ARG VROOM_EXPRESS_RELEASE=v0.9.0
 
 RUN echo "Cloning and installing vroom-express release ${VROOM_EXPRESS_RELEASE}..." && \
     git clone https://github.com/VROOM-Project/vroom-express.git && \
@@ -46,6 +47,7 @@ RUN apt-get update > /dev/null && \
     apt-get install -y --no-install-recommends \
       libssl1.1 \
     	libboost-system1.67.0 \
+        libglpk40 \
       curl \
       > /dev/null && \
     rm -rf /var/lib/apt/lists/* && \
