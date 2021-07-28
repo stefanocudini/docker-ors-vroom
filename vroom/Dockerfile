@@ -46,9 +46,10 @@ WORKDIR /vroom-express
 RUN apt-get update > /dev/null && \
     apt-get install -y --no-install-recommends \
       libssl1.1 \
-    	libboost-system1.67.0 \
+        libboost-system1.67.0 \
         libglpk40 \
       curl \
+      jq \
       > /dev/null && \
     rm -rf /var/lib/apt/lists/* && \
     # Install vroom-express
@@ -57,6 +58,9 @@ RUN apt-get update > /dev/null && \
     # To share the config.yml & access.log file with the host
     mkdir /conf
 
+COPY ./tests /tests
+
+RUN echo "TESTING VROOM" && vroom -i /tests/test_input.json | jq .
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 ENV VROOM_ROUTER=ors \
