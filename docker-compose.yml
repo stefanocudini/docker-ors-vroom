@@ -20,14 +20,13 @@ services:
       - ./jupyter/tests:/home/jovyan/tests
     #restart: always
     depends_on:
-      - ors
       - vroom
 
   ors:
     container_name: smartbin-ors
     ports:
       - 8082:8080
-    image: openrouteservice/openrouteservice:v6.3.6
+    image: openrouteservice/openrouteservice:v6.6.1
     environment:
       - BUILD_GRAPHS=True
       # Forces the container to rebuild ORS java
@@ -42,19 +41,7 @@ services:
       - ./logs/:/var/log/ors/
       - ./logs/:/usr/local/tomcat/logs/
       - ./elevation_cache/:/ors-core/data/elevation_cache/
-      #- ./graphs.italy:/ors-core/data/graphs
-      #
-      ## Trentino Alto Adige
-      #- ./graphs.trentino:/ors-core/data/graphs
-      #- ./data/trentino-alto-adige.osm.pbf:/ors-core/data/osm_file.pbf
-      #
-      ## Italia
-      #- ./graphs.italy:/ors-core/data/graphs
-      #- ./data/italy-latest.osm.pbf:/ors-core/data/osm_file.pbf
-      #
-      # Mezzocorona
-      #- ./graphs/:/ors-core/data/graphs
-      #- ./data/mezzocorona.osm.pbf:/ors-core/data/osm_file.pbf
+      
       # Cuneo
       - ./graphs.cuneo/:/ors-core/data/graphs
       - ./data/cuneo.osm.pbf:/ors-core/data/osm_file.pbf
@@ -64,28 +51,6 @@ services:
       #- ./data/povo_restrict.osm.pbf:/ors-core/data/osm_file.pbf
       #- ./data/povo.osm.gz:/ors-core/data/osm_file.pbf
       #
-#    restart: always
-  ors2:
-    container_name: smartbin-ors2
-    ports:
-      - 8083:8080
-    image: openrouteservice/openrouteservice:v6.6.0
-    environment:
-      - BUILD_GRAPHS=True
-      # Forces the container to rebuild ORS java
-      - JAVA_OPTS=-Djava.awt.headless=true -server -XX:TargetSurvivorRatio=75 -XX:SurvivorRatio=64 -XX:MaxTenuringThreshold=3 -XX:+UseConcMarkSweepGC -XX:ParallelGCThreads=4 -Xms512m -Xmx2000m -XX:MaxMetaspaceSize=2000m
-      - CATALINA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9001 -Dcom.sun.management.jmxremote.rmi.port=9001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost
-    volumes:
-      #PATCH for error "cp: cannot remove '/ors-conf/app.config': Read-only file system"
-      - ./ors/docker-entrypoint.sh:/docker-entrypoint.sh:ro
-      - ./elevation_cache/:/ors-core/data/elevation_cache/
-      - ./data/cuneo.osm.pbf:/ors-core/data/osm_file.pbf
-      - ./logs2/:/var/log/ors/
-      - ./logs2/:/usr/local/tomcat/logs/
-      - ./graphs.cuneo2/:/ors-core/data/graphs
-      #- ./ors/profiles/heavyvehicle.json:/ors-core/openrouteservice/src/main/resources/resources/services/routing/speed_limits/car.json
-      - ./ors/conf2:/ors-conf:ro
-
   vroom:
     container_name: smartbin-vroom
     image: smartbin-vroom:1.10.0
@@ -99,10 +64,10 @@ services:
       - ./vroom/conf/config.yml:/vroom-express/config.yml:ro
     environment:
       - ORS_HOST=ors
-      - ORS_PORT=8082
+      - ORS_PORT=8080
     #  - VROOM_LOG=./vroom/conf/
     depends_on:
-      - ors
+       - ors
 
   # #ors-proxy is useful for logging requestes/resposes from vroom to ors 
   # # and allow use of custom restrictions value of profile vehicle
